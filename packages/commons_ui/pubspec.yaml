@@ -1,0 +1,36 @@
+name: commons_ui
+description: "A new Flutter package project."
+version: 0.0.1
+publish_to: none
+homepage:
+
+environment:
+  sdk: '>=3.3.3 <4.0.0'
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # External packages
+  flutter_bloc: ^8.1.5
+  get_it: ^7.7.0
+
+  # Local packages
+  commons: 
+    path: ../commons
+
+  modular_router:
+   git: 
+    url: https://github.com/andresduke024/modular_router.git
+    ref: main
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+
+  assets:
+    - assets/images/

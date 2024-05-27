@@ -25,6 +25,8 @@ class CatDetailsBloc extends Bloc<CatDetailsEvent, CatDetailsState> {
   void _setUpEventListeners() {
     on<LoadCatDetailsEvent>(_onLoadCatDetailsEvent);
     on<ToggleFavoritesEvent>(_onToggleFavoritesEvent);
+    on<DeleteEvent>(_onDeleteEvent);
+    on<ReloadCatDetailsEvent>(_onReloadEvent);
   }
 
   Future _onLoadCatDetailsEvent(
@@ -82,5 +84,28 @@ class CatDetailsBloc extends Bloc<CatDetailsEvent, CatDetailsState> {
 
     final state = CatLoadedState(details: newDetails);
     emit(state);
+  }
+
+  Future _onDeleteEvent(
+    DeleteEvent event,
+    Emitter<CatDetailsState> emit,
+  ) async {
+    await _deleteFavoriteCatUseCase.invoke(id: event.data.details.id);
+    final newDetails = event.data.copyWith(isFavorite: false);
+
+    final state = CatDeletedState(details: newDetails);
+    emit(state);
+  }
+
+  Future _onReloadEvent(
+    ReloadCatDetailsEvent event,
+    Emitter<CatDetailsState> emit,
+  ) async {
+    final cat = await _getFavoritesCatUseCase.invoke(id: state.details.details.id);
+
+    final newDetails = state.details.copyWith(details: cat);
+    final newState = CatLoadedState(details: newDetails);
+
+    emit(newState);
   }
 }

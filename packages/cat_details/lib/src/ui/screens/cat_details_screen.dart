@@ -1,9 +1,9 @@
-import 'package:cat_details/src/bloc/router/cat_details_router_bloc.dart';
 import 'package:modular_router/modular_router.dart';
 
 import '../../bloc/cat_details/cat_details_bloc.dart';
 import '../../bloc/cat_details/cat_details_event.dart';
 import '../../bloc/cat_details/cat_details_state.dart';
+import '../../bloc/router/cat_details_router_bloc.dart';
 import '../../models/cat_detail.dart';
 
 import 'package:commons/commons.dart';
@@ -25,11 +25,27 @@ class CatDetailsScreen extends StatelessWidget {
       child: GenericScaffold<CatDetailsRouterBloc>(
         routerActionHandlerTypeOnBack: RouterActionHandlerType.external,
         title: Constants.navigationHeaderName,
-        body: BlocBuilder<CatDetailsBloc, CatDetailsState>(
-          builder: _builder,
+        body: BlocListener<CatDetailsBloc, CatDetailsState>(
+          listener: _listener,
+          child: BlocBuilder<CatDetailsBloc, CatDetailsState>(
+            buildWhen: _buildWhen,
+            builder: _builder,
+          ),
         ),
       ),
     );
+  }
+
+  void _listener(BuildContext context, CatDetailsState state) {
+    if (state is! CatDeletedState) {
+      return;
+    }
+
+    showDeleteSuccess(context);
+  }
+
+  bool _buildWhen(CatDetailsState previous, CatDetailsState next) {
+    return next is! CatDeletedState;
   }
 
   Widget _builder(BuildContext context, CatDetailsState state) {
@@ -48,7 +64,7 @@ class CatDetailsScreen extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           _buildImageRow(data.details),
           const SizedBox(height: 20),
@@ -57,6 +73,8 @@ class CatDetailsScreen extends StatelessWidget {
           _buildDescription(cat),
           const SizedBox(height: 20),
           _buildRatings(cat),
+          const Spacer(),
+          _buildActions(context, data),
         ],
       ),
     );
@@ -95,7 +113,11 @@ class CatDetailsScreen extends StatelessWidget {
   Widget _buildTitle(Cat cat) {
     return Text(
       cat.breedName,
-      style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 24),
+      style: const TextStyle(
+        color: Colors.black,
+        fontWeight: FontWeight.bold,
+        fontSize: 24,
+      ),
     );
   }
 
@@ -119,7 +141,9 @@ class CatDetailsScreen extends StatelessWidget {
     return Text(
       cat.description,
       textAlign: TextAlign.start,
-      style: const TextStyle(fontWeight: FontWeight.w300),
+      style: const TextStyle(
+        fontWeight: FontWeight.w300,
+      ),
     );
   }
 
@@ -141,5 +165,62 @@ class CatDetailsScreen extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  Widget _buildActions(BuildContext context, CatDetail cat) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        CustomButton(
+          text: Constants.editButton,
+          onTap: () {
+            final event = PushRequest(
+              route: CommonRoutes.catModifyPackage.value,
+              arguments: cat.details,
+              onGoBack: () => _onNavigationBack(context),
+            );
+            context.read<CatDetailsRouterBloc>().add(event);
+          },
+        ),
+        const SizedBox(height: 10),
+        CustomButton(
+          text: Constants.deleteButton,
+          onTap: () {
+            final event = DeleteEvent(data: cat);
+            context.read<CatDetailsBloc>().add(event);
+          },
+        ),
+      ],
+    );
+  }
+
+  void showDeleteSuccess(BuildContext context) {
+    final bloc = context.read<CatDetailsRouterBloc>();
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(Constants.catDeleteSuccess),
+          actions: [
+            TextButton(
+              child: const Text(Constants.doneButton),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    ).then((_) {
+      const event = PopRequest(type: RouterActionHandlerType.external);
+      bloc.add(event);
+    });
+  }
+
+  void _onNavigationBack(BuildContext context) {
+    const event = ReloadCatDetailsEvent();
+    context.read<CatDetailsBloc>().add(event);
   }
 }

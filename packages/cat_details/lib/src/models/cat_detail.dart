@@ -11,7 +11,6 @@ class CatDetail {
 
   CatDetail copyWith({
     Cat? details,
-    String? imageUrl,
     bool? isFavorite,
   }) {
     return CatDetail(

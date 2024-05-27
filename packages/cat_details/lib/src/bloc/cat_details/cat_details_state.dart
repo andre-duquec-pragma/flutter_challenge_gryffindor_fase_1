@@ -17,3 +17,7 @@ final class CatLoadedState extends CatDetailsState {
 final class CatDetailErrorState extends CatDetailsState {
   const CatDetailErrorState({required super.details});
 }
+
+final class CatDeletedState extends CatDetailsState {
+  const CatDeletedState({required super.details});
+}

@@ -21,3 +21,15 @@ final class ToggleFavoritesEvent extends CatDetailsEvent {
     required this.data,
   });
 }
+
+final class DeleteEvent extends CatDetailsEvent {
+  final CatDetail data;
+
+  const DeleteEvent({
+    required this.data,
+  });
+}
+
+final class ReloadCatDetailsEvent extends CatDetailsEvent {
+  const ReloadCatDetailsEvent();
+}

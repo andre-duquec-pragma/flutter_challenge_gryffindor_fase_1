@@ -1,9 +1,9 @@
 import 'package:cats_modify/src/bloc/modify/cat_modify_events.dart';
 import 'package:cats_modify/src/ui/components/cat_image_drop_down_button.dart';
+import 'package:cats_modify/src/ui/components/save_button.dart';
 import 'package:commons/commons.dart';
 import 'package:commons_ui/commons_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modular_router/modular_router.dart';
 
@@ -17,7 +17,10 @@ class CatModifyScreen extends StatelessWidget {
 
   final _formKey = GlobalKey<FormState>();
 
-  CatModifyScreen({super.key, this.cat});
+  CatModifyScreen({
+    super.key,
+    this.cat,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +50,9 @@ class CatModifyScreen extends StatelessWidget {
   void _listener(BuildContext context, CatModifyState state) {
     switch (state) {
       case CatModifyFinished():
-        const event = PopRequest(type: RouterActionHandlerType.external);
-        context.read<CatModifyRouterBloc>().add(event);
+        showSuccess(context);
       case CatModifyError(message: final message):
-        break;
+        showError(context, message);
       default:
         break;
     }
@@ -132,22 +134,15 @@ class CatModifyScreen extends StatelessWidget {
   }
 
   Widget _buildSaveButton(BuildContext context) {
-    const double padding = 10;
+    return SaveButton(
+      onTap: () {
+        if (!_formKey.currentState!.validate()) {
+          return;
+        }
 
-    return Padding(
-      padding: const EdgeInsets.all(padding),
-      child: CustomButton(
-        text: Constants.saveButton,
-        width: double.infinity,
-        onTap: () {
-          if (!_formKey.currentState!.validate()) {
-            return;
-          }
-
-          const event = SaveEvent();
-          context.read<CatModifyBloc>().add(event);
-        },
-      ),
+        const event = SaveEvent();
+        context.read<CatModifyBloc>().add(event);
+      },
     );
   }
 
@@ -204,5 +199,49 @@ class CatModifyScreen extends StatelessWidget {
     );
 
     context.read<CatModifyBloc>().add(event);
+  }
+
+  void showError(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(Constants.error),
+          content: Text(message),
+          actions: [
+            TextButton(
+              child: const Text(Constants.okButton),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void showSuccess(BuildContext context) {
+    final bloc = context.read<CatModifyRouterBloc>();
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(Constants.catSaveSuccess),
+          actions: [
+            TextButton(
+              child: const Text(Constants.doneButton),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    ).then((_) {
+      const event = PopRequest(type: RouterActionHandlerType.external);
+      bloc.add(event);
+    });
   }
 }

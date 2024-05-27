@@ -12,6 +12,11 @@ final class Constants {
   static const String selectImagePlaceHolder = "Select cat image";
 
   static const String saveButton = "Save";
+  static const String doneButton = "Done";
+  static const String okButton = "Ok";
 
+  static const String error = "¡Error!";
   static const String genericErrorMessage = "Something went wrong. Please try again";
+
+  static const String catSaveSuccess = "¡Cat saved successfully!";
 }

@@ -67,7 +67,7 @@ final class CatModifyBloc extends Bloc<CatModifyEvent, CatModifyState> {
       if (formData.intelligence == 0 || formData.affectionLevel == 0) {
         final newState = CatModifyError(
           formData: formData,
-          message: "message",
+          message: "All values must be greater than 0",
         );
         emit(newState);
         return;

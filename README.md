@@ -1,16 +1,32 @@
-# flutter_challenge_gryffindor_fase_1
 
-A new Flutter project.
+# Reto Flutter Gryffindor fase 1
 
-## Getting Started
+Para la solución de este reto se realizó una pequeña app de creación y administración de gatitos.
 
-This project is a starting point for a Flutter application.
+El proyecto usa una arquitectura modular donde cada funcionalidad especifica se encuentra separada en un módulo (paquete) diferente. 
 
-A few resources to get you started if this is your first Flutter project:
+Todas las responsabilidades y comportamientos únicos y particulares de cada funcionalidad se encuentran bien segmentados en su propio paquete. Para las partes del proyecto que son transversales y de uso común de todos los módulos se crearon otros dos paquetes (commons / commons_ui) donde se encuentran encapsulados dichos comportamientos.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+El proyecto usa inyección de depencias y todas las clases respetan el principio de inversión de la depencia.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Cada módulo cuenta con una stack de navegación propio y se encuentra completamente desligado del stack de navegación principal.
+
+El stack de navegación principal cumple la función de unir los módulos entre si, pero a su vez se asegura que no existan dependencias entre modulos.
+
+Cada modulo solo exporta de manera pública lo mínimo que necesita para funcionar.
+
+Cada módulo tiene la misma estructura de carpetas:
+
+- base
+    - inyección_de_dependencias
+- bloc
+    - carpeta_para_cada_bloc
+- models
+- ui
+    - screens
+    - components
+- utils
+
+El proyecto usa una arquitectura combinada con el patron Bloc, Casos de uso y repositorios.
+
+Y finalmente para sincronizar las dependencias entre modulos se usa la libreria "Melos". Dentro de la raíz del proyecto se encuentra el archivo melos.yaml donde estan definidas las dependencias comunes.

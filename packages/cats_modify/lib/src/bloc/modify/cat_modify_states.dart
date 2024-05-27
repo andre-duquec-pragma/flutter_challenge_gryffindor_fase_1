@@ -5,11 +5,7 @@ sealed class CatModifyState {
 
   const CatModifyState({required this.formData});
 
-  CatModifiedState copyWith({Cat? formData}) {
-    return CatModifiedState(
-      formData: formData ?? this.formData,
-    );
-  }
+  CatModifyState copyWith({Cat? formData});
 }
 
 final class CatModifyInitialState extends CatModifyState {
@@ -27,21 +23,53 @@ final class CatModifyInitialState extends CatModifyState {
             description: cat?.description ?? "",
           ),
         );
+
+  @override
+  CatModifyState copyWith({Cat? formData}) {
+    return CatModifyInitialState(
+      cat: formData ?? this.formData,
+    );
+  }
 }
 
 final class CatModifiedState extends CatModifyState {
   const CatModifiedState({required super.formData});
+
+  @override
+  CatModifyState copyWith({Cat? formData}) {
+    return CatModifiedState(
+      formData: formData ?? this.formData,
+    );
+  }
 }
 
 final class CatModifyFinished extends CatModifyState {
   const CatModifyFinished({required super.formData});
+
+  @override
+  CatModifyState copyWith({Cat? formData}) {
+    return CatModifyFinished(
+      formData: formData ?? this.formData,
+    );
+  }
 }
 
-final class CatModifyError extends CatModifiedState {
+final class CatModifyError extends CatModifyState {
   final String message;
 
   const CatModifyError({
     required super.formData,
     required this.message,
   });
+
+  @override
+  CatModifyState copyWith({
+    Cat? formData,
+    String? message,
+  }) {
+    return CatModifyError(
+      formData: formData ?? this.formData,
+      message: message ?? this.message,
+    );
+  }
 }

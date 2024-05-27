@@ -14,14 +14,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../utils/constants.dart';
 
 class CatDetailsScreen extends StatelessWidget {
-  final Cat cat;
+  final Cat _cat;
 
-  const CatDetailsScreen({super.key, required this.cat});
+  const CatDetailsScreen({super.key, required Cat cat}) : _cat = cat;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => CatDetailsBloc(cat: cat),
+      create: (context) => CatDetailsBloc(cat: _cat),
       child: GenericScaffold<CatDetailsRouterBloc>(
         routerActionHandlerTypeOnBack: RouterActionHandlerType.external,
         title: Constants.navigationHeaderName,
@@ -54,8 +54,10 @@ class CatDetailsScreen extends StatelessWidget {
         return _buildDetails(context, data);
       case CatLoadedState(details: final data):
         return _buildDetails(context, data);
-      case CatDetailsState():
-        return const SizedBox();
+      case CatDetailErrorState():
+        return const GenericErrorScreen(routerActionHandlerType: RouterActionHandlerType.external);
+      case CatDeletedState(details: final data):
+        return _buildDetails(context, data);
     }
   }
 
@@ -70,9 +72,9 @@ class CatDetailsScreen extends StatelessWidget {
           const SizedBox(height: 20),
           _buildHeader(context, data),
           const SizedBox(height: 20),
-          _buildDescription(cat),
+          _buildDescription(data.details),
           const SizedBox(height: 20),
-          _buildRatings(cat),
+          _buildRatings(data.details),
           const Spacer(),
           _buildActions(context, data),
         ],
@@ -87,26 +89,23 @@ class CatDetailsScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          CatImage(cat: cat),
+          CatImage(cat: data),
         ],
       ),
     );
   }
 
   Widget _buildHeader(BuildContext context, CatDetail data) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildTitle(cat),
-            CatOriginText(origin: cat.origin),
-          ],
-        ),
-        _buildFavoritesButton(context, data),
-      ],
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          _buildTitle(data.details),
+          CatOriginText(origin: data.details.origin),
+        ],
+      ),
     );
   }
 
@@ -121,28 +120,15 @@ class CatDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildFavoritesButton(BuildContext context, CatDetail data) {
-    final color = data.isFavorite ? Colors.deepPurple : Colors.grey;
-    final icon = data.isFavorite ? Icons.auto_awesome_rounded : Icons.auto_awesome_outlined;
-
-    return IconButton(
-      onPressed: () {
-        context.read<CatDetailsBloc>().add(ToggleFavoritesEvent(data: data));
-      },
-      icon: Icon(
-        icon,
-        color: color,
-        size: 35,
-      ),
-    );
-  }
-
   Widget _buildDescription(Cat cat) {
-    return Text(
-      cat.description,
-      textAlign: TextAlign.start,
-      style: const TextStyle(
-        fontWeight: FontWeight.w300,
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Text(
+        cat.description,
+        textAlign: TextAlign.start,
+        style: const TextStyle(
+          fontWeight: FontWeight.w300,
+        ),
       ),
     );
   }

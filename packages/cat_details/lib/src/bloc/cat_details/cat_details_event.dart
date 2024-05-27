@@ -14,14 +14,6 @@ final class LoadCatDetailsEvent extends CatDetailsEvent {
   });
 }
 
-final class ToggleFavoritesEvent extends CatDetailsEvent {
-  final CatDetail data;
-
-  const ToggleFavoritesEvent({
-    required this.data,
-  });
-}
-
 final class DeleteEvent extends CatDetailsEvent {
   final CatDetail data;
 

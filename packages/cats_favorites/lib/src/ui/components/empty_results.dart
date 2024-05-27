@@ -51,7 +51,7 @@ class EmptyResults extends StatelessWidget {
   }
 
   Widget _buildButton(BuildContext context) {
-    return ExitButton(
+    return CustomButton(
       text: Constants.goToCatModifyMessage,
       onTap: () {
         final event = PushRequest(

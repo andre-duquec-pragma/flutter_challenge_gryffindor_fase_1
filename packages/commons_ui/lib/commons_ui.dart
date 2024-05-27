@@ -18,11 +18,17 @@ export './src/components/ellipsis_text.dart' show EllipsisText;
 
 export './src/components/cat_origin_text.dart' show CatOriginText;
 
-export './src/components/exit_button.dart' show ExitButton;
+export 'src/components/custom_button.dart' show CustomButton;
 
 export './src/components/generic_asset_image.dart' show GenericAssetImage;
 
 export './src/components/gradient_background.dart' show GradientBackground;
+
+export './src/components/generic_textfield.dart' show GenericTextfield;
+
+export './src/components/generic_text_area.dart' show GenericTextArea;
+
+export './src/components/generic_slider.dart' show GenericSlider;
 
 // Screens
 

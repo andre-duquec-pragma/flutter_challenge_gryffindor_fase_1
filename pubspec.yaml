@@ -29,6 +29,8 @@ dependencies:
     path: packages/cat_details
   cats_favorites:
     path: packages/cats_favorites
+  cats_modify:
+    path: packages/cats_modify
 
   modular_router:
    git: 

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:cat_details/cat_details.dart';
 import 'package:cats_favorites/cats_favorites.dart';
+import 'package:cats_modify/cats_modify.dart';
 
 import 'package:commons/commons.dart';
 import 'package:flutter/services.dart';
@@ -27,8 +28,10 @@ class MainDependenciesBuilder {
     await Hive.initFlutter();
 
     Iterable<BasePackageBuilder> builders = [
+      MainPackageBuilder(),
       CatDetailsPackageBuilder(),
       CatsFavoritesPackageBuilder(),
+      CatModifyPackageBuilder(),
     ];
 
     await Future.forEach(builders, (element) async {

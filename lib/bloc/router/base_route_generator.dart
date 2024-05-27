@@ -1,5 +1,6 @@
 import 'package:cat_details/cat_details.dart';
 import 'package:cats_favorites/cats_favorites.dart';
+import 'package:cats_modify/cats_modify.dart';
 import 'package:commons/commons.dart';
 import 'package:commons_ui/commons_ui.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,7 @@ final class BaseRouteGenerator implements ExtendedRouteGenerator {
       case CommonRoutes.catDetailsPackage:
         return _generateCatDetailsRoute(settings);
       case CommonRoutes.catModifyPackage:
-        return _errorRoute;
+        return _generateCatModifyRoute(settings);
     }
   }
 
@@ -56,6 +57,14 @@ final class BaseRouteGenerator implements ExtendedRouteGenerator {
 
     return MaterialPageRoute(
       builder: (context) => MainCatDetailsScreen(data: data),
+    );
+  }
+
+  Route? _generateCatModifyRoute(RouteSettings settings) {
+    final data = CommonUtils().safeCast<Cat>(data: settings.arguments);
+
+    return MaterialPageRoute(
+      builder: (context) => MainCatModifyScreen(data: data),
     );
   }
 

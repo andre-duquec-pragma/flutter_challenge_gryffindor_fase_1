@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
-class ExitButton extends StatelessWidget {
+class CustomButton extends StatelessWidget {
   final String text;
+  final double? width;
 
   final VoidCallback onTap;
 
-  const ExitButton({
+  const CustomButton({
     super.key,
     this.text = "Go back",
+    this.width,
     required this.onTap,
   });
 
@@ -16,6 +18,7 @@ class ExitButton extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
+        width: width,
         decoration: BoxDecoration(
           color: Colors.deepPurple,
           borderRadius: BorderRadius.circular(20),
@@ -29,6 +32,7 @@ class ExitButton extends StatelessWidget {
               fontWeight: FontWeight.bold,
               fontSize: 16,
             ),
+            textAlign: TextAlign.center,
           ),
         ),
       ),

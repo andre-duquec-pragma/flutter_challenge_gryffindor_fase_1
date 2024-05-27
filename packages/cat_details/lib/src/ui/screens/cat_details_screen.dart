@@ -50,7 +50,7 @@ class CatDetailsScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildImageRow(data.details, data.imageUrl),
+          _buildImageRow(data.details),
           const SizedBox(height: 20),
           _buildHeader(context, data),
           const SizedBox(height: 20),
@@ -62,38 +62,15 @@ class CatDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildImageRow(Cat data, String? imageUrl) {
+  Widget _buildImageRow(Cat data) {
     return SizedBox(
-      height: 200,
+      height: 180,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          _buildImage(data, imageUrl),
+          CatImage(cat: cat),
         ],
-      ),
-    );
-  }
-
-  Widget _buildImage(Cat data, String? imageUrl) {
-    final url = imageUrl ?? "";
-
-    if (url.isEmpty) {
-      return CatImage(cat: cat);
-    }
-
-    const double size = 190;
-
-    return CircleAvatar(
-      radius: 150,
-      backgroundColor: Colors.deepPurple,
-      child: ClipOval(
-        child: Image.network(
-          url,
-          fit: BoxFit.cover,
-          width: size,
-          height: size,
-        ),
       ),
     );
   }

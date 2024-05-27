@@ -2,8 +2,6 @@ import 'package:commons/commons.dart';
 import 'package:hive/hive.dart';
 import 'package:get_it/get_it.dart';
 
-import '../cats_favorites_repository.dart';
-
 final class CatsFavoritesRepositoryImpl implements CatsFavoritesRepository {
   final EnvironmentValuesProvider _environmentProvider;
 

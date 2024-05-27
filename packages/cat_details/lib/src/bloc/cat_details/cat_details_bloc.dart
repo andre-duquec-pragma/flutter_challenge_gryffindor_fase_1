@@ -1,5 +1,4 @@
 import '../../models/cat_detail.dart';
-import '../../use_cases/get_cat_image_use_case.dart';
 import 'cat_details_event.dart';
 import 'cat_details_state.dart';
 import 'package:commons/commons.dart';
@@ -7,14 +6,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 class CatDetailsBloc extends Bloc<CatDetailsEvent, CatDetailsState> {
-  final GetCatImageUseCase _getCatDetailsUseCase;
   final GetFavoritesCatUseCase _getFavoritesCatUseCase;
   final AddFavoriteCatUseCase _addFavoriteCatUseCase;
   final DeleteFavoriteCatUseCase _deleteFavoriteCatUseCase;
 
   CatDetailsBloc({required Cat cat})
-      : _getCatDetailsUseCase = GetIt.I.get(),
-        _getFavoritesCatUseCase = GetIt.I.get(),
+      : _getFavoritesCatUseCase = GetIt.I.get(),
         _addFavoriteCatUseCase = GetIt.I.get(),
         _deleteFavoriteCatUseCase = GetIt.I.get(),
         super(
@@ -35,38 +32,19 @@ class CatDetailsBloc extends Bloc<CatDetailsEvent, CatDetailsState> {
     Emitter<CatDetailsState> emit,
   ) async {
     try {
-      await _loadFavoritesInfo(event.cat, emit);
+      final isFavorite = await _getFavoritesCatUseCase.invoke(id: event.cat.id) != null;
 
-      await _loadImage(emit);
+      final details = CatDetail(
+        details: event.cat,
+        isFavorite: isFavorite,
+      );
+
+      emit(CatLoadedState(details: details));
     } catch (_) {
       emit(CatDetailErrorState(
         details: CatDetail(details: event.cat),
       ));
     }
-  }
-
-  Future _loadFavoritesInfo(
-    Cat data,
-    Emitter<CatDetailsState> emit,
-  ) async {
-    final isFavorite = await _getFavoritesCatUseCase.invoke(id: data.id) != null;
-
-    final details = CatDetail(
-      details: data,
-      isFavorite: isFavorite,
-    );
-
-    emit(CatLoadedState(details: details));
-  }
-
-  Future _loadImage(
-    Emitter<CatDetailsState> emit,
-  ) async {
-    final data = state.details;
-    final image = await _getCatDetailsUseCase.invoke(data: data.details);
-    final result = data.copyWith(imageUrl: image);
-
-    emit(CatLoadedState(details: result));
   }
 
   Future _onToggleFavoritesEvent(

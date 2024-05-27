@@ -10,6 +10,10 @@ enum CommonResources {
   empty(name: "empty_illustration.png");
 
   final String value;
+  final String name;
 
-  const CommonResources({required String name}) : value = "packages/commons_ui/assets/images/$name";
+  const CommonResources({required this.name}) : value = "packages/commons_ui/assets/images/$name";
+
+  factory CommonResources.init({required String name}) =>
+      values.firstWhere(((e) => e.name == name), orElse: () => CommonResources.cat1);
 }

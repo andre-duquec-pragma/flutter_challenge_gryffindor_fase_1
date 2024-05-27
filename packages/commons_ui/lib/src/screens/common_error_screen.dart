@@ -1,4 +1,4 @@
-import 'package:commons_ui/src/components/exit_button.dart';
+import 'package:commons_ui/src/components/custom_button.dart';
 import 'package:commons_ui/src/components/generic_asset_image.dart';
 import 'package:commons_ui/src/utils/common_resources.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +31,7 @@ class CommonErrorScreen extends StatelessWidget {
                 GenericAssetImage(
                   resourceName: CommonResources.error.value,
                 ),
-                ExitButton(
+                CustomButton(
                   onTap: () {
                     final event = PopRequest(type: routerActionHandlerType);
                     onBackButtonPressed(event);

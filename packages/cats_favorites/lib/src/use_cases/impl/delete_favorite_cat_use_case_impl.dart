@@ -1,4 +1,3 @@
-import 'package:cats_favorites/src/repositories/cats_favorites_repository.dart';
 import 'package:commons/commons.dart';
 import 'package:get_it/get_it.dart';
 

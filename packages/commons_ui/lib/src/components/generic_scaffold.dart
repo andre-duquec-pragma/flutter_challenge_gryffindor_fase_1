@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:modular_router/modular_router.dart';
 
 import '../../commons_ui.dart';
 
-final class GenericScaffold<Router extends RouterBloc> extends StatelessWidget {
-  final RouterActionHandlerType routerActionHandlerTypeOnBack;
+final class GenericScaffold extends StatelessWidget {
   final String title;
   final Widget body;
   final VoidCallback? onBackPressed;
 
   const GenericScaffold({
     super.key,
-    this.routerActionHandlerTypeOnBack = RouterActionHandlerType.self,
     required this.title,
     required this.body,
     this.onBackPressed,
@@ -38,8 +34,7 @@ final class GenericScaffold<Router extends RouterBloc> extends StatelessWidget {
           return;
         }
 
-        final event = PopRequest(type: routerActionHandlerTypeOnBack);
-        context.read<Router>().add(event);
+        Navigator.pop(context);
       },
     );
   }

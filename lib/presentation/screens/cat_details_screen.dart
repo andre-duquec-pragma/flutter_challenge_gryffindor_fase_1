@@ -1,55 +1,34 @@
-import 'package:modular_router/modular_router.dart';
-
-import '../../bloc/cat_details/cat_details_bloc.dart';
-import '../../bloc/cat_details/cat_details_event.dart';
-import '../../bloc/cat_details/cat_details_state.dart';
-import '../../bloc/router/cat_details_router_bloc.dart';
-import '../../models/cat_detail.dart';
+import '../../domain/bloc/cat_details/cat_details_bloc.dart';
+import '../../domain/bloc/cat_details/cat_details_state.dart';
+import '../../domain/models/cat_detail.dart';
 
 import 'package:commons/commons.dart';
 import 'package:commons_ui/commons_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../utils/constants.dart';
+import '../../domain/utils/constants.dart';
 
 class CatDetailsScreen extends StatelessWidget {
-  final Cat _cat;
+  final CatDetailsBloc bloc;
 
-  const CatDetailsScreen({super.key, required Cat cat}) : _cat = cat;
+  CatDetailsScreen({super.key, required Cat cat}) : bloc = CatDetailsBloc(cat: cat);
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => CatDetailsBloc(cat: _cat),
-      child: GenericScaffold<CatDetailsRouterBloc>(
-        routerActionHandlerTypeOnBack: RouterActionHandlerType.external,
+    return GenericScaffold(
         title: Constants.navigationHeaderName,
-        body: BlocListener<CatDetailsBloc, CatDetailsState>(
-          listener: _listener,
-          child: BlocBuilder<CatDetailsBloc, CatDetailsState>(
-            buildWhen: _buildWhen,
-            builder: _builder,
-          ),
-        ),
-      ),
-    );
+        body: StreamBuilder(
+          stream: bloc.stream.stream,
+          builder: _builder,
+        ));
   }
 
-  void _listener(BuildContext context, CatDetailsState state) {
-    if (state is! CatDeletedState) {
-      return;
+  Widget _builder(BuildContext context, AsyncSnapshot<CatDetailsState> snapshot) {
+    if (snapshot.data == null) {
+      return const GenericErrorScreen();
     }
 
-    showDeleteSuccess(context);
-  }
-
-  bool _buildWhen(CatDetailsState previous, CatDetailsState next) {
-    return next is! CatDeletedState;
-  }
-
-  Widget _builder(BuildContext context, CatDetailsState state) {
-    switch (state) {
+    switch (snapshot.data!) {
       case CatDetailsStarted(details: final data):
         return _buildDetails(context, data);
       case CatLoadedState(details: final data):
@@ -57,6 +36,7 @@ class CatDetailsScreen extends StatelessWidget {
       case CatDetailErrorState():
         return const GenericErrorScreen();
       case CatDeletedState(details: final data):
+        showDeleteSuccess(context);
         return _buildDetails(context, data);
     }
   }
@@ -161,20 +141,16 @@ class CatDetailsScreen extends StatelessWidget {
         CustomButton(
           text: Constants.editButton,
           onTap: () {
-            final event = PushRequest(
-              route: CommonRoutes.catModifyPackage.value,
-              arguments: cat.details,
-              onGoBack: () => _onNavigationBack(context),
-            );
-            context.read<CatDetailsRouterBloc>().add(event);
+            Navigator.pushNamed(context, CommonRoutes.catModifyPackage.value, arguments: cat.details).then((_) {
+              bloc.reload();
+            });
           },
         ),
         const SizedBox(height: 10),
         CustomButton(
           text: Constants.deleteButton,
           onTap: () {
-            final event = DeleteEvent(data: cat);
-            context.read<CatDetailsBloc>().add(event);
+            bloc.delete(cat);
           },
         ),
       ],
@@ -182,8 +158,6 @@ class CatDetailsScreen extends StatelessWidget {
   }
 
   void showDeleteSuccess(BuildContext context) {
-    final bloc = context.read<CatDetailsRouterBloc>();
-
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -200,13 +174,7 @@ class CatDetailsScreen extends StatelessWidget {
         );
       },
     ).then((_) {
-      const event = PopRequest(type: RouterActionHandlerType.external);
-      bloc.add(event);
+      Navigator.pop(context);
     });
-  }
-
-  void _onNavigationBack(BuildContext context) {
-    const event = ReloadCatDetailsEvent();
-    context.read<CatDetailsBloc>().add(event);
   }
 }

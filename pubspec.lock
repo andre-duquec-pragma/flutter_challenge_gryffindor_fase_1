@@ -41,13 +41,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
-  cat_details:
-    dependency: "direct main"
-    description:
-      path: "packages/cat_details"
-      relative: true
-    source: path
-    version: "0.0.1"
   cats_modify:
     dependency: "direct main"
     description:

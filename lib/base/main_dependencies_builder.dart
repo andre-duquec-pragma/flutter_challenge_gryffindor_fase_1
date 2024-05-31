@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:cat_details/cat_details.dart';
 import 'package:cats_modify/cats_modify.dart';
 
 import 'package:commons/commons.dart';
@@ -39,7 +38,6 @@ class MainDependenciesBuilder {
 
     Iterable<BasePackageBuilder> builders = [
       MainPackageBuilder(),
-      CatDetailsPackageBuilder(),
       CatModifyPackageBuilder(),
     ];
 

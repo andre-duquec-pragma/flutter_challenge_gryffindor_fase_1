@@ -24,8 +24,7 @@ class CatModifyScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GenericScaffold<CatModifyRouterBloc>(
-      routerActionHandlerTypeOnBack: RouterActionHandlerType.external,
+    return GenericScaffold(
       title: _buildTitle(),
       body: _buildScreen(context),
     );

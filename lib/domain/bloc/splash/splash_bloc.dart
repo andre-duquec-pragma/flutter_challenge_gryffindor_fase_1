@@ -1,29 +1,24 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'dart:async';
 
-import 'splash_events.dart';
 import 'splash_states.dart';
 import '../../../base/main_dependencies_builder.dart';
 
-class SplashBloc extends Bloc<SplashEvent, SplashState> {
-  SplashBloc() : super(const SplashState(status: SplashStatus.initial)) {
-    _setUpEventsListeners();
-    add(SplashStarted());
+class SplashBloc {
+  final StreamController<SplashState> stream = StreamController();
+
+  SplashBloc() : super() {
+    stream.sink.add(const SplashState(status: SplashStatus.initial));
+
+    _start();
   }
 
-  void _setUpEventsListeners() {
-    on<SplashStarted>(_onSplashStartInitialSetUpEvent);
-  }
-
-  Future _onSplashStartInitialSetUpEvent(
-    SplashStarted event,
-    Emitter<SplashState> emit,
-  ) async {
+  Future _start() async {
     final dependenciesBuilder = MainDependenciesBuilder();
     await dependenciesBuilder.start();
 
     await Future.delayed(const Duration(seconds: 1));
 
-    emit(const SplashState(
+    stream.add(const SplashState(
       status: SplashStatus.success,
     ));
   }

@@ -16,9 +16,8 @@ final class CatModifyBloc {
 
   CatModifyBloc({
     this.cat,
-  })  : _addFavoriteCatUseCase = GetIt.I.get(),
-        super() {
-    stream.add(CatModifyInitialState(cat: cat));
+  }) : _addFavoriteCatUseCase = GetIt.I.get() {
+    stream.sink.add(CatModifyInitialState(cat: cat));
   }
 
   Future onModifyFormTextFieldChange(
@@ -39,7 +38,7 @@ final class CatModifyBloc {
         newFormData = state.formData.copyWith(origin: newValue);
     }
 
-    stream.add(state.copyWith(formData: newFormData));
+    stream.sink.add(state.copyWith(formData: newFormData));
   }
 
   Future onCatModifyFormNumericFieldChange(
@@ -56,7 +55,7 @@ final class CatModifyBloc {
         newFormData = state.formData.copyWith(affectionLevel: newValue);
     }
 
-    stream.add(state.copyWith(formData: newFormData));
+    stream.sink.add(state.copyWith(formData: newFormData));
   }
 
   Future save() async {
@@ -70,7 +69,7 @@ final class CatModifyBloc {
           formData: formData,
           message: "All values must be greater than 0",
         );
-        stream.add(newState);
+        stream.sink.add(newState);
         return;
       }
 
@@ -81,7 +80,7 @@ final class CatModifyBloc {
         formData: state.formData,
         message: Constants.genericErrorMessage,
       );
-      stream.add(newState);
+      stream.sink.add(newState);
     }
   }
 }

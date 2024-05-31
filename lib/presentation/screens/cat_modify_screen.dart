@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../domain/bloc/modify/cat_modify_bloc.dart';
-import '../../domain/bloc/modify/cat_modify_states.dart';
+import '../../domain/bloc/cat_modify/cat_modify_bloc.dart';
+import '../../domain/bloc/cat_modify/cat_modify_states.dart';
 import '../../domain/models/cats.dart';
 import '../../domain/utils/base_resources.dart';
 import '../../domain/utils/constants.dart';
@@ -14,15 +14,13 @@ import '../components/save_button.dart';
 import 'generic_error_screen.dart';
 
 class CatModifyScreen extends StatelessWidget {
-  final Cat? cat;
-
-  final _formKey = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
 
   final CatModifyBloc bloc;
 
   CatModifyScreen({
     super.key,
-    this.cat,
+    Cat? cat,
   }) : bloc = CatModifyBloc(cat: cat);
 
   @override
@@ -37,7 +35,7 @@ class CatModifyScreen extends StatelessWidget {
   }
 
   String _buildTitle() {
-    return cat == null ? Constants.addCat : Constants.editCat;
+    return bloc.cat == null ? Constants.addCat : Constants.editCat;
   }
 
   Widget _builder(BuildContext context, AsyncSnapshot<CatModifyState> snapshot) {
@@ -62,7 +60,7 @@ class CatModifyScreen extends StatelessWidget {
       child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           child: Form(
-            key: _formKey,
+            key: formKey,
             child: Column(
               children: [
                 _buildTextFields(context, state),
@@ -131,7 +129,7 @@ class CatModifyScreen extends StatelessWidget {
   Widget _buildSaveButton(BuildContext context) {
     return SaveButton(
       onTap: () {
-        if (!_formKey.currentState!.validate()) {
+        if (!formKey.currentState!.validate()) {
           return;
         }
 

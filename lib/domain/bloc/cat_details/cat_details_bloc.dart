@@ -16,7 +16,7 @@ class CatDetailsBloc {
   CatDetailsBloc({required Cat cat})
       : _getFavoritesCatUseCase = GetIt.I.get(),
         _deleteFavoriteCatUseCase = GetIt.I.get() {
-    stream.add(CatDetailsStarted(details: CatDetail(details: cat)));
+    stream.sink.add(CatDetailsStarted(details: CatDetail(details: cat)));
 
     loadCatDetails(cat);
   }
@@ -30,9 +30,9 @@ class CatDetailsBloc {
         isFavorite: isFavorite,
       );
 
-      stream.add(CatLoadedState(details: details));
+      stream.sink.add(CatLoadedState(details: details));
     } catch (_) {
-      stream.add(CatDetailErrorState(details: CatDetail(details: cat)));
+      stream.sink.add(CatDetailErrorState(details: CatDetail(details: cat)));
     }
   }
 
@@ -41,7 +41,7 @@ class CatDetailsBloc {
     final newDetails = data.copyWith(isFavorite: false);
 
     final state = CatDeletedState(details: newDetails);
-    stream.add(state);
+    stream.sink.add(state);
   }
 
   Future reload() async {
@@ -51,6 +51,6 @@ class CatDetailsBloc {
     final newDetails = state.details.copyWith(details: cat);
     final newState = state.copyWith(details: newDetails);
 
-    stream.add(newState);
+    stream.sink.add(newState);
   }
 }

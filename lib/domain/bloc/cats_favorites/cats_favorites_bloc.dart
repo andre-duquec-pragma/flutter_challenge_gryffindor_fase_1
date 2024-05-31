@@ -11,19 +11,19 @@ final class CatsFavoritesBloc {
   final StreamController<CatsFavoritesState> stream = StreamController();
 
   CatsFavoritesBloc() : _getFavoritesCatListUseCase = GetIt.I.get() {
-    stream.add(const CatsFavoritesInitialState());
+    stream.sink.add(const CatsFavoritesInitialState());
     loadCatsFavorites();
   }
 
   Future loadCatsFavorites() async {
-    stream.add(const CatsFavoritesLoadingState());
+    stream.sink.add(const CatsFavoritesLoadingState());
 
     try {
       final result = await _getFavoritesCatListUseCase.invoke();
 
-      stream.add(CatsFavoritesLoadedState(data: result));
+      stream.sink.add(CatsFavoritesLoadedState(data: result));
     } catch (_) {
-      stream.add(const CatsFavoritesFailureState());
+      stream.sink.add(const CatsFavoritesFailureState());
     }
   }
 }

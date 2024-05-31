@@ -1,6 +1,5 @@
 enum CommonRoutes {
   error(value: ""),
-  splash(value: "splash"),
   favoriteCatsPackages(value: "favorite_cats_package"),
   catDetailsPackage(value: "cat_details_package"),
   catModifyPackage(value: "cat_modify_package");

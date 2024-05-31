@@ -32,13 +32,13 @@ class MainDependenciesBuilder {
     injector.registerSingleton<EnvironmentValuesProvider>(EnvironmentValuesProviderImpl(environment: environment));
 
     // Repositories
-    injector.registerFactory<GetFavoritesCatListUseCase>(() => GetFavoritesCatListUseCaseImpl());
     injector.registerFactory<CatsFavoritesRepository>(() => CatsFavoritesRepositoryImpl());
 
     // Use Cases
     injector.registerFactory<AddFavoriteCatUseCase>(() => AddFavoriteCatUseCaseImpl());
     injector.registerFactory<GetFavoritesCatUseCase>(() => GetFavoritesCatsUseCaseImpl());
     injector.registerFactory<DeleteFavoriteCatUseCase>(() => DeleteFavoriteCatUseCaseImpl());
+    injector.registerFactory<GetFavoritesCatListUseCase>(() => GetFavoritesCatListUseCaseImpl());
 
     await Hive.initFlutter();
   }

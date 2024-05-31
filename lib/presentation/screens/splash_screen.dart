@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:modular_router/modular_router.dart';
 
 import '../../domain/bloc/splash/splash_bloc.dart';
 import '../../domain/bloc/splash/splash_states.dart';
@@ -9,7 +7,11 @@ import '../../domain/utils/common_routes.dart';
 import '../components/padding_image.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+  final SplashBloc bloc = SplashBloc();
+
+  SplashScreen({
+    super.key,
+  });
 
   @override
   State<StatefulWidget> createState() => _SplashScreenState();
@@ -19,23 +21,35 @@ class _SplashScreenState extends State<SplashScreen> {
   _SplashScreenState();
 
   @override
-  Widget build(BuildContext context) {
-    return BlocListener<SplashBloc, SplashState>(
-      bloc: context.read(),
-      listener: _listener,
-      child: _buildBody(context),
+  void initState() {
+    _listenBloc();
+    super.initState();
+  }
+
+  void _listenBloc() {
+    widget.bloc.stream.stream.listen(
+      (state) {
+        if (state.status != SplashStatus.success) {
+          return;
+        }
+
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          CommonRoutes.favoriteCatsPackages.value,
+          (route) => route.settings.name == CommonRoutes.root,
+        );
+      },
     );
   }
 
-  void _listener(BuildContext context, SplashState state) {
-    if (state.status != SplashStatus.success) return;
-
-    final action = RouterPushAndRemoveUntilActionType(removeUntilRoute: CommonRoutes.root);
-    final event = PushRequest(route: CommonRoutes.favoriteCatsPackages.value, actionType: action);
-    context.read<BaseRouterBloc>().add(event);
+  @override
+  void dispose() {
+    widget.bloc.stream.close();
+    super.dispose();
   }
 
-  Widget _buildBody(BuildContext context) {
+  @override
+  Widget build(BuildContext context) {
     return Center(
       child: Container(
         decoration: BoxDecoration(color: Theme.of(context).primaryColor),

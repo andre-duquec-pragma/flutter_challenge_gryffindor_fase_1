@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_challenge_gryffindor_fase_1/presentation/screens/cat_details_screen.dart';
 import 'package:flutter_challenge_gryffindor_fase_1/presentation/screens/cats_favorites_screen.dart';
-import 'package:modular_router/modular_router.dart';
 
-import '../../../presentation/screens/base_screen.dart';
 import '../../../presentation/screens/cat_modify_screen.dart';
 import '../../../presentation/screens/generic_error_screen.dart';
 import '../../../presentation/screens/splash_screen.dart';
 import '../../models/cats.dart';
-import '../../utils/common_routes.dart';
-import '../../utils/common_utils.dart';
+import '../common_routes.dart';
+import '../common_utils.dart';
 
-final class BaseRouteGenerator implements ExtendedRouteGenerator {
+final class BaseRouteGenerator {
   const BaseRouteGenerator();
 
   Route get _errorRoute {
@@ -20,15 +18,12 @@ final class BaseRouteGenerator implements ExtendedRouteGenerator {
     );
   }
 
-  @override
   Route? generateRoute(RouteSettings settings) {
     final route = CommonRoutes.init(value: settings.name ?? "");
 
     switch (route) {
       case CommonRoutes.error:
         return _errorRoute;
-      case CommonRoutes.splash:
-        return _generateSplashRoute();
       case CommonRoutes.favoriteCatsPackages:
         return _generateCatFavoritesRoute();
       case CommonRoutes.catDetailsPackage:
@@ -36,10 +31,6 @@ final class BaseRouteGenerator implements ExtendedRouteGenerator {
       case CommonRoutes.catModifyPackage:
         return _generateCatModifyRoute(settings);
     }
-  }
-
-  Route? _generateSplashRoute() {
-    return MaterialPageRoute(builder: (_) => const SplashScreen());
   }
 
   Route? _generateCatFavoritesRoute() {
@@ -68,12 +59,11 @@ final class BaseRouteGenerator implements ExtendedRouteGenerator {
     );
   }
 
-  @override
   List<Route<dynamic>> generateInitialRoute(String initialRoute) {
     return [
       MaterialPageRoute(
         settings: RouteSettings(name: CommonRoutes.root),
-        builder: (context) => const BaseScreen(),
+        builder: (context) => SplashScreen(),
       ),
     ];
   }

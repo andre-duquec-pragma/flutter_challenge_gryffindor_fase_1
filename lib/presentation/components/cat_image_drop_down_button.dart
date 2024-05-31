@@ -1,12 +1,13 @@
-import 'package:commons_ui/commons_ui.dart';
 import 'package:flutter/material.dart';
 
+import '../../domain/utils/base_resources.dart';
 import '../../domain/utils/constants.dart';
+import 'ellipsis_text.dart';
 
 class CatImageDropDownButton extends StatelessWidget {
   final String current;
-  final List<CommonResources> items;
-  final ValueChanged<CommonResources?> onChanged;
+  final List<BaseResources> items;
+  final ValueChanged<BaseResources?> onChanged;
 
   const CatImageDropDownButton({
     super.key,
@@ -60,12 +61,12 @@ class CatImageDropDownButton extends StatelessWidget {
       underline: Container(),
       dropdownColor: Colors.white,
       style: const TextStyle(color: Colors.white),
-      value: CommonResources.init(name: current),
+      value: BaseResources.init(name: current),
       onChanged: onChanged,
     );
   }
 
-  Widget _buildImage(CommonResources resource) {
+  Widget _buildImage(BaseResources resource) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Image(

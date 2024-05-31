@@ -1,5 +1,3 @@
-import 'package:commons/commons.dart';
-import 'package:commons_ui/commons_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_challenge_gryffindor_fase_1/presentation/screens/cat_details_screen.dart';
 import 'package:flutter_challenge_gryffindor_fase_1/presentation/screens/cats_favorites_screen.dart';
@@ -7,7 +5,11 @@ import 'package:modular_router/modular_router.dart';
 
 import '../../../presentation/screens/base_screen.dart';
 import '../../../presentation/screens/cat_modify_screen.dart';
+import '../../../presentation/screens/generic_error_screen.dart';
 import '../../../presentation/screens/splash_screen.dart';
+import '../../models/cats.dart';
+import '../../utils/common_routes.dart';
+import '../../utils/common_utils.dart';
 
 final class BaseRouteGenerator implements ExtendedRouteGenerator {
   const BaseRouteGenerator();

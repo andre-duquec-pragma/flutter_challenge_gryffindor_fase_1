@@ -1,11 +1,14 @@
-import 'package:commons/commons.dart';
-import 'package:commons_ui/commons_ui.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/bloc/cats_favorites/cats_favorites_bloc.dart';
 import '../../domain/bloc/cats_favorites/cats_favorites_states.dart';
+import '../../domain/models/cats.dart';
+import '../../domain/utils/common_routes.dart';
 import '../components/empty_results.dart';
 import '../components/favorites_list.dart';
+import '../components/generic_loading.dart';
+import '../components/gradient_background.dart';
+import 'generic_error_screen.dart';
 
 class CatsFavoritesScreen extends StatelessWidget {
   final CatsFavoritesBloc bloc = CatsFavoritesBloc();

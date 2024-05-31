@@ -1,12 +1,17 @@
-import 'package:commons/commons.dart';
-import 'package:commons_ui/commons_ui.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/bloc/modify/cat_modify_bloc.dart';
 import '../../domain/bloc/modify/cat_modify_states.dart';
+import '../../domain/models/cats.dart';
+import '../../domain/utils/base_resources.dart';
 import '../../domain/utils/constants.dart';
+import '../../domain/utils/validators/form_empty_text_validator.dart';
 import '../components/cat_image_drop_down_button.dart';
+import '../components/generic_scaffold.dart';
+import '../components/generic_slider.dart';
+import '../components/generic_textfield.dart';
 import '../components/save_button.dart';
+import 'generic_error_screen.dart';
 
 class CatModifyScreen extends StatelessWidget {
   final Cat? cat;
@@ -137,13 +142,13 @@ class CatModifyScreen extends StatelessWidget {
 
   Widget _buildDropDownButtons(BuildContext context, CatModifyState state) {
     final resources = [
-      CommonResources.cat1,
-      CommonResources.cat2,
-      CommonResources.cat3,
-      CommonResources.cat4,
-      CommonResources.cat5,
-      CommonResources.cat6,
-      CommonResources.cat7,
+      BaseResources.cat1,
+      BaseResources.cat2,
+      BaseResources.cat3,
+      BaseResources.cat4,
+      BaseResources.cat5,
+      BaseResources.cat6,
+      BaseResources.cat7,
     ];
 
     return Column(

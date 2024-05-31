@@ -1,4 +1,4 @@
-import 'package:commons/commons.dart';
+import 'cats.dart';
 
 class CatDetail {
   final Cat details;

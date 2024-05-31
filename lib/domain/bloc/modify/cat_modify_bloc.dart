@@ -1,8 +1,9 @@
 import 'dart:async';
 
-import 'package:commons/commons.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../models/cats.dart';
+import '../../use_cases/add_favorite_cat_use_case.dart';
 import '../../utils/constants.dart';
 import 'cat_modify_states.dart';
 

@@ -20,12 +20,6 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
 
-  # Local packages
-  commons:
-    path: packages/commons
-  commons_ui:
-    path: packages/commons_ui
-
   modular_router:
    git: 
     url: https://github.com/andresduke024/modular_router.git

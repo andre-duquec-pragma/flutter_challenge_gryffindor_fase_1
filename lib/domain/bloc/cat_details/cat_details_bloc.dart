@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import '../../models/cat_detail.dart';
+import '../../models/cats.dart';
+import '../../use_cases/delete_favorite_cat_use_case.dart';
+import '../../use_cases/get_favorite_cat_use_case.dart';
 import 'cat_details_state.dart';
-import 'package:commons/commons.dart';
 import 'package:get_it/get_it.dart';
 
 class CatDetailsBloc {

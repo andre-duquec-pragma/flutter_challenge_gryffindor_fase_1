@@ -1,6 +1,7 @@
-import 'package:commons/commons.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../models/cats.dart';
+import '../../repositories/cats_favorites_repository.dart';
 import '../get_favorites_cat_list_use_case.dart';
 
 final class GetFavoritesCatListUseCaseImpl implements GetFavoritesCatListUseCase {

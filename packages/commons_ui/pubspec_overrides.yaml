@@ -1,4 +1,0 @@
-# melos_managed_dependency_overrides: commons
-dependency_overrides:
-  commons:
-    path: ../commons

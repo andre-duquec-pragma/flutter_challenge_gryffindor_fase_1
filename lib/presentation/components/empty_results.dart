@@ -1,8 +1,11 @@
-import 'package:commons/commons.dart';
-import 'package:commons_ui/commons_ui.dart';
 import 'package:flutter/material.dart';
 
+import '../../domain/utils/base_resources.dart';
+import '../../domain/utils/common_routes.dart';
 import '../../domain/utils/constants.dart';
+import 'custom_button.dart';
+import 'ellipsis_text.dart';
+import 'generic_asset_image.dart';
 
 class EmptyResults extends StatelessWidget {
   final VoidCallback? onNavigationGoBack;
@@ -30,7 +33,7 @@ class EmptyResults extends StatelessWidget {
 
   Widget _buildImage() {
     return GenericAssetImage(
-      resourceName: CommonResources.empty.value,
+      resourceName: BaseResources.empty.value,
     );
   }
 

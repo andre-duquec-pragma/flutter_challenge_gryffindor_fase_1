@@ -1,7 +1,8 @@
-import 'package:commons/commons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modular_router/modular_router.dart';
+
+import '../../domain/utils/common_routes.dart';
 
 class BaseScreen extends StatelessWidget {
   const BaseScreen({

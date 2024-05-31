@@ -1,4 +1,4 @@
-import 'package:commons/commons.dart';
+import '../../models/cats.dart';
 
 sealed class CatModifyState {
   final Cat formData;

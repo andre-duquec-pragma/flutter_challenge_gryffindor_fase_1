@@ -24,9 +24,7 @@ class MainCatModifyScreen extends StatelessWidget {
       ],
       child: GenericMainScreen<CatModifyRouterBloc>(
         initialScreen: CatModifyScreen(cat: data),
-        routeNotFoundScreen: const GenericErrorScreen<BaseRouterBloc>(
-          routerActionHandlerType: RouterActionHandlerType.self,
-        ),
+        routeNotFoundScreen: const GenericErrorScreen(),
         routeGenerator: CatModifyRouteGenerator.name,
       ),
     );

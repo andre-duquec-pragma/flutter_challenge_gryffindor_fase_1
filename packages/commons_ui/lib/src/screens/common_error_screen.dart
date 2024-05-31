@@ -2,16 +2,13 @@ import 'package:commons_ui/src/components/custom_button.dart';
 import 'package:commons_ui/src/components/generic_asset_image.dart';
 import 'package:commons_ui/src/utils/common_resources.dart';
 import 'package:flutter/material.dart';
-import 'package:modular_router/modular_router.dart';
 
 class CommonErrorScreen extends StatelessWidget {
-  final RouterActionHandlerType routerActionHandlerType;
-  final Function(RouterEvent) onBackButtonPressed;
+  final VoidCallback onBackButtonPressed;
   final Widget? child;
 
   const CommonErrorScreen({
     super.key,
-    required this.routerActionHandlerType,
     required this.onBackButtonPressed,
     this.child,
   });
@@ -32,10 +29,7 @@ class CommonErrorScreen extends StatelessWidget {
                   resourceName: CommonResources.error.value,
                 ),
                 CustomButton(
-                  onTap: () {
-                    final event = PopRequest(type: routerActionHandlerType);
-                    onBackButtonPressed(event);
-                  },
+                  onTap: onBackButtonPressed,
                 ),
                 child ?? const SizedBox()
               ],

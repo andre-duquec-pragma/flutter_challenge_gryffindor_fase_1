@@ -1,8 +1,8 @@
-import 'package:cats_favorites/src/ui/components/favorite_card.dart';
 import 'package:commons/commons.dart';
 import 'package:flutter/material.dart';
 
-import '../../utils/constants.dart';
+import '../../domain/utils/constants.dart';
+import 'favorite_card.dart';
 import 'main_title.dart';
 
 class FavoritesList extends StatelessWidget {
@@ -10,15 +10,10 @@ class FavoritesList extends StatelessWidget {
 
   final VoidCallback onAddCatButtonPressed;
 
-  final Function(Cat) onEditCatButtonPressed;
-  final Function(Cat) onDeleteCatButtonPressed;
-
   const FavoritesList({
     super.key,
     required this.data,
     required this.onAddCatButtonPressed,
-    required this.onEditCatButtonPressed,
-    required this.onDeleteCatButtonPressed,
   });
 
   @override
@@ -44,11 +39,7 @@ class FavoritesList extends StatelessWidget {
       crossAxisSpacing: spacing,
       mainAxisSpacing: spacing,
       children: data.map((cat) {
-        return FavoriteCard(
-          data: cat,
-          onEditCatButtonPressed: onEditCatButtonPressed,
-          onDeleteCatButtonPressed: onDeleteCatButtonPressed,
-        );
+        return FavoriteCard(data: cat);
       }).toList(),
     );
   }

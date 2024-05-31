@@ -24,9 +24,7 @@ class MainCatDetailsScreen extends StatelessWidget {
       ],
       child: GenericMainScreen<CatDetailsRouterBloc>(
         initialScreen: CatDetailsScreen(cat: data),
-        routeNotFoundScreen: const GenericErrorScreen<BaseRouterBloc>(
-          routerActionHandlerType: RouterActionHandlerType.self,
-        ),
+        routeNotFoundScreen: const GenericErrorScreen(),
         routeGenerator: CatDetailsRouteGenerator.name,
       ),
     );

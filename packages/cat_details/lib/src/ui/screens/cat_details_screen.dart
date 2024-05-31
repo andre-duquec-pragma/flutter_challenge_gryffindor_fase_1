@@ -55,7 +55,7 @@ class CatDetailsScreen extends StatelessWidget {
       case CatLoadedState(details: final data):
         return _buildDetails(context, data);
       case CatDetailErrorState():
-        return const GenericErrorScreen(routerActionHandlerType: RouterActionHandlerType.external);
+        return const GenericErrorScreen();
       case CatDeletedState(details: final data):
         return _buildDetails(context, data);
     }

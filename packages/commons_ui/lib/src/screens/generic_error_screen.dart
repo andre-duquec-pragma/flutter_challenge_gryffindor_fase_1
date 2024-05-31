@@ -1,30 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:modular_router/modular_router.dart';
 
 import 'common_error_screen.dart';
 
-class GenericErrorScreen<T extends RouterBloc> extends StatelessWidget {
-  final RouterActionHandlerType routerActionHandlerType;
+class GenericErrorScreen extends StatelessWidget {
   final VoidCallback? onBackButtonPressed;
 
   const GenericErrorScreen({
     super.key,
-    required this.routerActionHandlerType,
     this.onBackButtonPressed,
   });
 
   @override
   Widget build(BuildContext context) {
     return CommonErrorScreen(
-      routerActionHandlerType: routerActionHandlerType,
-      onBackButtonPressed: (event) {
+      onBackButtonPressed: () {
         if (onBackButtonPressed != null) {
           onBackButtonPressed!();
           return;
         }
 
-        context.read<T>().add(event);
+        Navigator.pop(context);
       },
     );
   }

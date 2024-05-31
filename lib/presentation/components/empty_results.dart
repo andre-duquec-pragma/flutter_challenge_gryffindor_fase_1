@@ -1,10 +1,8 @@
-import 'package:cats_favorites/src/bloc/router/cat_favorites_router_bloc.dart';
-import 'package:cats_favorites/src/utils/constants.dart';
 import 'package:commons/commons.dart';
 import 'package:commons_ui/commons_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:modular_router/modular_router.dart';
+
+import '../../domain/utils/constants.dart';
 
 class EmptyResults extends StatelessWidget {
   final VoidCallback? onNavigationGoBack;
@@ -54,11 +52,12 @@ class EmptyResults extends StatelessWidget {
     return CustomButton(
       text: Constants.goToCatModifyMessage,
       onTap: () {
-        final event = PushRequest(
-          route: CommonRoutes.catModifyPackage.value,
-          onGoBack: onNavigationGoBack,
-        );
-        context.read<CatFavoritesRouterBloc>().add(event);
+        Navigator.pushNamed(context, CommonRoutes.catModifyPackage.value).then((_) {
+          if (onNavigationGoBack == null) {
+            return;
+          }
+          onNavigationGoBack!();
+        });
       },
     );
   }

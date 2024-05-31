@@ -21,14 +21,3 @@ final class CatsFavoritesLoadedState extends CatsFavoritesState {
 final class CatsFavoritesFailureState extends CatsFavoritesState {
   const CatsFavoritesFailureState({super.data});
 }
-
-final class CatsFavoritesNavigationState extends CatsFavoritesState {
-  final String route;
-  final Object? arguments;
-
-  const CatsFavoritesNavigationState({
-    required this.route,
-    this.arguments,
-    super.data,
-  });
-}

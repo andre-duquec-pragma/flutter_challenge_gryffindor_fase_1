@@ -48,13 +48,6 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
-  cats_favorites:
-    dependency: "direct main"
-    description:
-      path: "packages/cats_favorites"
-      relative: true
-    source: path
-    version: "0.0.1"
   cats_modify:
     dependency: "direct main"
     description:

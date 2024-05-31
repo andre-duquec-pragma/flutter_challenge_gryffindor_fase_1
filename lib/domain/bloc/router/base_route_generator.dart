@@ -1,9 +1,9 @@
 import 'package:cat_details/cat_details.dart';
-import 'package:cats_favorites/cats_favorites.dart';
 import 'package:cats_modify/cats_modify.dart';
 import 'package:commons/commons.dart';
 import 'package:commons_ui/commons_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_challenge_gryffindor_fase_1/presentation/screens/cats_favorites_screen.dart';
 import 'package:modular_router/modular_router.dart';
 
 import '../../../presentation/screens/base_screen.dart';
@@ -14,9 +14,7 @@ final class BaseRouteGenerator implements ExtendedRouteGenerator {
 
   Route get _errorRoute {
     return MaterialPageRoute(
-      builder: (context) => const GenericErrorScreen<BaseRouterBloc>(
-        routerActionHandlerType: RouterActionHandlerType.self,
-      ),
+      builder: (context) => const GenericErrorScreen(),
     );
   }
 
@@ -44,7 +42,7 @@ final class BaseRouteGenerator implements ExtendedRouteGenerator {
 
   Route? _generateCatFavoritesRoute() {
     return MaterialPageRoute(
-      builder: (context) => const MainCatFavoritesScreen(),
+      builder: (context) => CatsFavoritesScreen(),
     );
   }
 

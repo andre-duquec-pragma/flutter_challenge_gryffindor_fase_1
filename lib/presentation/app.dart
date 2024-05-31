@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modular_router/modular_router.dart';
 
-import '../bloc/router/base_route_generator.dart';
-import '../bloc/splash/splash_bloc.dart';
+import '../domain/bloc/router/base_route_generator.dart';
+import '../domain/bloc/splash/splash_bloc.dart';
 
 class App extends StatelessWidget {
   final ExtendedRouteGenerator routeGenerator;

@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modular_router/modular_router.dart';
 
-import '../../bloc/splash/splash_bloc.dart';
-import '../../bloc/splash/splash_states.dart';
-import '../../utils/base_resources.dart';
+import '../../domain/bloc/splash/splash_bloc.dart';
+import '../../domain/bloc/splash/splash_states.dart';
+import '../../domain/utils/base_resources.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

@@ -6,8 +6,8 @@ import 'package:commons_ui/commons_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:modular_router/modular_router.dart';
 
-import '../../ui/screens/base_screen.dart';
-import '../../ui/screens/splash_screen.dart';
+import '../../../presentation/screens/base_screen.dart';
+import '../../../presentation/screens/splash_screen.dart';
 
 final class BaseRouteGenerator implements ExtendedRouteGenerator {
   const BaseRouteGenerator();

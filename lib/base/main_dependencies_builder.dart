@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:cats_modify/cats_modify.dart';
-
 import 'package:commons/commons.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
@@ -38,7 +36,6 @@ class MainDependenciesBuilder {
 
     Iterable<BasePackageBuilder> builders = [
       MainPackageBuilder(),
-      CatModifyPackageBuilder(),
     ];
 
     await Future.forEach(builders, (element) async {

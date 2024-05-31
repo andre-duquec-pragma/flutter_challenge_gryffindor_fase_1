@@ -73,3 +73,15 @@ final class CatModifyError extends CatModifyState {
     );
   }
 }
+
+enum CatModifyTextFormField {
+  breedName,
+  origin,
+  description,
+  imageId;
+}
+
+enum CatModifyNumericFormField {
+  intelligence,
+  affectionLevel,
+}

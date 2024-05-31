@@ -1,32 +1,33 @@
-import 'package:cats_modify/src/bloc/modify/cat_modify_events.dart';
-import 'package:cats_modify/src/ui/components/cat_image_drop_down_button.dart';
-import 'package:cats_modify/src/ui/components/save_button.dart';
 import 'package:commons/commons.dart';
 import 'package:commons_ui/commons_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:modular_router/modular_router.dart';
 
-import '../../bloc/modify/cat_modify_bloc.dart';
-import '../../bloc/modify/cat_modify_states.dart';
-import '../../bloc/router/cat_modify_router_bloc.dart';
-import '../../utils/constants.dart';
+import '../../domain/bloc/modify/cat_modify_bloc.dart';
+import '../../domain/bloc/modify/cat_modify_states.dart';
+import '../../domain/utils/constants.dart';
+import '../components/cat_image_drop_down_button.dart';
+import '../components/save_button.dart';
 
 class CatModifyScreen extends StatelessWidget {
   final Cat? cat;
 
   final _formKey = GlobalKey<FormState>();
 
+  final CatModifyBloc bloc;
+
   CatModifyScreen({
     super.key,
     this.cat,
-  });
+  }) : bloc = CatModifyBloc(cat: cat);
 
   @override
   Widget build(BuildContext context) {
     return GenericScaffold(
       title: _buildTitle(),
-      body: _buildScreen(context),
+      body: StreamBuilder(
+        stream: bloc.stream.stream,
+        builder: _builder,
+      ),
     );
   }
 
@@ -34,20 +35,12 @@ class CatModifyScreen extends StatelessWidget {
     return cat == null ? Constants.addCat : Constants.editCat;
   }
 
-  Widget _buildScreen(BuildContext context) {
-    return BlocProvider(
-      create: (_) => CatModifyBloc(cat: cat),
-      child: BlocListener<CatModifyBloc, CatModifyState>(
-        listener: _listener,
-        child: BlocBuilder<CatModifyBloc, CatModifyState>(
-          builder: _builder,
-        ),
-      ),
-    );
-  }
+  Widget _builder(BuildContext context, AsyncSnapshot<CatModifyState> snapshot) {
+    if (snapshot.data == null) {
+      return const GenericErrorScreen();
+    }
 
-  void _listener(BuildContext context, CatModifyState state) {
-    switch (state) {
+    switch (snapshot.data) {
       case CatModifyFinished():
         showSuccess(context);
       case CatModifyError(message: final message):
@@ -55,10 +48,8 @@ class CatModifyScreen extends StatelessWidget {
       default:
         break;
     }
-  }
 
-  Widget _builder(BuildContext context, CatModifyState state) {
-    return _buildBody(context, state);
+    return _buildBody(context, snapshot.data!);
   }
 
   Widget _buildBody(BuildContext context, CatModifyState state) {
@@ -88,7 +79,7 @@ class CatModifyScreen extends StatelessWidget {
           placeHolder: Constants.breedPlaceHolder,
           validators: const [FormEmptyTextValidator()],
           onChanged: (value) {
-            _addTextChangeEvent(context, CatModifyTextFormField.breedName, value);
+            bloc.onModifyFormTextFieldChange(CatModifyTextFormField.breedName, value);
           },
         ),
         GenericTextfield(
@@ -96,7 +87,7 @@ class CatModifyScreen extends StatelessWidget {
           placeHolder: Constants.originPlaceHolder,
           validators: const [FormEmptyTextValidator()],
           onChanged: (value) {
-            _addTextChangeEvent(context, CatModifyTextFormField.origin, value);
+            bloc.onModifyFormTextFieldChange(CatModifyTextFormField.origin, value);
           },
         ),
         GenericTextfield(
@@ -104,7 +95,7 @@ class CatModifyScreen extends StatelessWidget {
           placeHolder: Constants.descriptionPlaceHolder,
           validators: const [FormEmptyTextValidator()],
           onChanged: (value) {
-            _addTextChangeEvent(context, CatModifyTextFormField.description, value);
+            bloc.onModifyFormTextFieldChange(CatModifyTextFormField.description, value);
           },
         ),
       ],
@@ -118,14 +109,14 @@ class CatModifyScreen extends StatelessWidget {
           title: Constants.intelligentPlaceHolder,
           value: state.formData.intelligence.toDouble(),
           onChanged: (value) {
-            _addNumChangeEvent(context, CatModifyNumericFormField.intelligence, value);
+            bloc.onCatModifyFormNumericFieldChange(CatModifyNumericFormField.intelligence, value.toInt());
           },
         ),
         GenericSlider(
           title: Constants.affectionPlaceHolder,
           value: state.formData.affectionLevel.toDouble(),
           onChanged: (value) {
-            _addNumChangeEvent(context, CatModifyNumericFormField.affectionLevel, value);
+            bloc.onCatModifyFormNumericFieldChange(CatModifyNumericFormField.affectionLevel, value.toInt());
           },
         ),
       ],
@@ -139,8 +130,7 @@ class CatModifyScreen extends StatelessWidget {
           return;
         }
 
-        const event = SaveEvent();
-        context.read<CatModifyBloc>().add(event);
+        bloc.save();
       },
     );
   }
@@ -167,37 +157,11 @@ class CatModifyScreen extends StatelessWidget {
               return;
             }
 
-            _addTextChangeEvent(context, CatModifyTextFormField.imageId, image.name);
+            bloc.onModifyFormTextFieldChange(CatModifyTextFormField.imageId, image.name);
           },
         ),
       ],
     );
-  }
-
-  void _addNumChangeEvent(
-    BuildContext context,
-    CatModifyNumericFormField field,
-    double value,
-  ) {
-    final event = CatModifyFormNumericFieldChange(
-      field: field,
-      newValue: value.toInt(),
-    );
-
-    context.read<CatModifyBloc>().add(event);
-  }
-
-  void _addTextChangeEvent(
-    BuildContext context,
-    CatModifyTextFormField field,
-    String value,
-  ) {
-    final event = CatModifyFormTextFieldChange(
-      field: field,
-      newValue: value,
-    );
-
-    context.read<CatModifyBloc>().add(event);
   }
 
   void showError(BuildContext context, String message) {
@@ -221,8 +185,6 @@ class CatModifyScreen extends StatelessWidget {
   }
 
   void showSuccess(BuildContext context) {
-    final bloc = context.read<CatModifyRouterBloc>();
-
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -239,8 +201,7 @@ class CatModifyScreen extends StatelessWidget {
         );
       },
     ).then((_) {
-      const event = PopRequest(type: RouterActionHandlerType.external);
-      bloc.add(event);
+      Navigator.pop(context);
     });
   }
 }

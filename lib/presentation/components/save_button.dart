@@ -1,7 +1,7 @@
 import 'package:commons_ui/commons_ui.dart';
 import 'package:flutter/material.dart';
 
-import '../../utils/constants.dart';
+import '../../domain/utils/constants.dart';
 
 final class SaveButton extends StatelessWidget {
   final double padding = 10;

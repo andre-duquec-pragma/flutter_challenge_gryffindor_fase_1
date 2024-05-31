@@ -1,4 +1,3 @@
-import 'package:cats_modify/cats_modify.dart';
 import 'package:commons/commons.dart';
 import 'package:commons_ui/commons_ui.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +6,7 @@ import 'package:flutter_challenge_gryffindor_fase_1/presentation/screens/cats_fa
 import 'package:modular_router/modular_router.dart';
 
 import '../../../presentation/screens/base_screen.dart';
+import '../../../presentation/screens/cat_modify_screen.dart';
 import '../../../presentation/screens/splash_screen.dart';
 
 final class BaseRouteGenerator implements ExtendedRouteGenerator {
@@ -62,7 +62,7 @@ final class BaseRouteGenerator implements ExtendedRouteGenerator {
     final data = CommonUtils().safeCast<Cat>(data: settings.arguments);
 
     return MaterialPageRoute(
-      builder: (context) => MainCatModifyScreen(data: data),
+      builder: (context) => CatModifyScreen(cat: data),
     );
   }
 

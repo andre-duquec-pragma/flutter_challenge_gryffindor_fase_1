@@ -1,7 +1,7 @@
 import 'package:commons_ui/commons_ui.dart';
 import 'package:flutter/material.dart';
 
-import '../../utils/constants.dart';
+import '../../domain/utils/constants.dart';
 
 class CatImageDropDownButton extends StatelessWidget {
   final String current;

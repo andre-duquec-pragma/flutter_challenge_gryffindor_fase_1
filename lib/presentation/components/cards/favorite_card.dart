@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../domain/models/cats.dart';
-import '../../domain/utils/common_routes.dart';
+import '../../../domain/models/cats.dart';
+import '../../../domain/utils/common_routes.dart';
 import 'base_favorite_card.dart';
-import 'cat_image.dart';
-import 'ellipsis_text.dart';
+import '../images/cat_image.dart';
+import '../texts/ellipsis_text.dart';
 
 final class FavoriteCard extends StatelessWidget {
   final Cat data;

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../domain/models/cats.dart';
-import '../../domain/utils/constants.dart';
-import 'favorite_card.dart';
-import 'main_title.dart';
+import '../../../domain/models/cats.dart';
+import '../../../domain/utils/constants.dart';
+import '../cards/favorite_card.dart';
+import '../texts/main_title.dart';
 
 class FavoritesList extends StatelessWidget {
   final List<Cat> data;

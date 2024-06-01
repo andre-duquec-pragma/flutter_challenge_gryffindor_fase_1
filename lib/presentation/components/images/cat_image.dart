@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../domain/models/cats.dart';
-import '../../domain/utils/base_resources.dart';
+import '../../../domain/models/cats.dart';
+import '../../../domain/utils/base_resources.dart';
 
 class CatImage extends StatelessWidget {
   final Cat cat;

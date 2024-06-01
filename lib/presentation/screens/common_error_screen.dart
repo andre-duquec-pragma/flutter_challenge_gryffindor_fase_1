@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../domain/utils/base_resources.dart';
-import '../components/custom_button.dart';
-import '../components/generic_asset_image.dart';
+import '../components/buttons/custom_button.dart';
+import '../components/images/generic_asset_image.dart';
 
 class CommonErrorScreen extends StatelessWidget {
   final VoidCallback onBackButtonPressed;

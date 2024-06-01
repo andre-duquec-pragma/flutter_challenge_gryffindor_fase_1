@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_challenge_gryffindor_fase_1/presentation/components/buttons/cat_resources_drop_down_button.dart';
 
 import '../../domain/bloc/cat_modify/cat_modify_bloc.dart';
 import '../../domain/bloc/cat_modify/cat_modify_states.dart';
 import '../../domain/models/cats.dart';
-import '../../domain/utils/base_resources.dart';
 import '../../domain/utils/constants.dart';
 import '../../domain/utils/validators/form_empty_text_validator.dart';
-import '../components/cat_image_drop_down_button.dart';
-import '../components/generic_scaffold.dart';
-import '../components/generic_slider.dart';
-import '../components/generic_textfield.dart';
-import '../components/save_button.dart';
+import '../components/containers/generic_scaffold.dart';
+import '../components/bars/generic_slider.dart';
+import '../components/texts/generic_textfield.dart';
+import '../components/buttons/save_button.dart';
 import 'generic_error_screen.dart';
 
-class CatModifyScreen extends StatelessWidget {
+class CatModifyScreen extends StatefulWidget {
   final formKey = GlobalKey<FormState>();
 
   final CatModifyBloc bloc;
@@ -24,18 +23,29 @@ class CatModifyScreen extends StatelessWidget {
   }) : bloc = CatModifyBloc(cat: cat);
 
   @override
+  State<StatefulWidget> createState() => _CatModifyScreenState();
+}
+
+class _CatModifyScreenState extends State<CatModifyScreen> {
+  @override
+  void dispose() {
+    widget.bloc.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GenericScaffold(
       title: _buildTitle(),
       body: StreamBuilder(
-        stream: bloc.stream.stream,
+        stream: widget.bloc.stateStream,
         builder: _builder,
       ),
     );
   }
 
   String _buildTitle() {
-    return bloc.cat == null ? Constants.addCat : Constants.editCat;
+    return widget.bloc.cat == null ? Constants.addCat : Constants.editCat;
   }
 
   Widget _builder(BuildContext context, AsyncSnapshot<CatModifyState> snapshot) {
@@ -43,14 +53,16 @@ class CatModifyScreen extends StatelessWidget {
       return const GenericErrorScreen();
     }
 
-    switch (snapshot.data) {
-      case CatModifyFinished():
-        showSuccess(context);
-      case CatModifyError(message: final message):
-        showError(context, message);
-      default:
-        break;
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      switch (snapshot.data) {
+        case CatModifyFinished():
+          showSuccess(context);
+        case CatModifyError(message: final message):
+          showError(context, message);
+        default:
+          break;
+      }
+    });
 
     return _buildBody(context, snapshot.data!);
   }
@@ -60,7 +72,7 @@ class CatModifyScreen extends StatelessWidget {
       child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           child: Form(
-            key: formKey,
+            key: widget.formKey,
             child: Column(
               children: [
                 _buildTextFields(context, state),
@@ -82,7 +94,7 @@ class CatModifyScreen extends StatelessWidget {
           placeHolder: Constants.breedPlaceHolder,
           validators: const [FormEmptyTextValidator()],
           onChanged: (value) {
-            bloc.onModifyFormTextFieldChange(CatModifyTextFormField.breedName, value);
+            widget.bloc.onModifyFormTextFieldChange(CatModifyTextFormField.breedName, value);
           },
         ),
         GenericTextfield(
@@ -90,7 +102,7 @@ class CatModifyScreen extends StatelessWidget {
           placeHolder: Constants.originPlaceHolder,
           validators: const [FormEmptyTextValidator()],
           onChanged: (value) {
-            bloc.onModifyFormTextFieldChange(CatModifyTextFormField.origin, value);
+            widget.bloc.onModifyFormTextFieldChange(CatModifyTextFormField.origin, value);
           },
         ),
         GenericTextfield(
@@ -98,7 +110,7 @@ class CatModifyScreen extends StatelessWidget {
           placeHolder: Constants.descriptionPlaceHolder,
           validators: const [FormEmptyTextValidator()],
           onChanged: (value) {
-            bloc.onModifyFormTextFieldChange(CatModifyTextFormField.description, value);
+            widget.bloc.onModifyFormTextFieldChange(CatModifyTextFormField.description, value);
           },
         ),
       ],
@@ -112,58 +124,38 @@ class CatModifyScreen extends StatelessWidget {
           title: Constants.intelligentPlaceHolder,
           value: state.formData.intelligence.toDouble(),
           onChanged: (value) {
-            bloc.onCatModifyFormNumericFieldChange(CatModifyNumericFormField.intelligence, value.toInt());
+            widget.bloc.onCatModifyFormNumericFieldChange(CatModifyNumericFormField.intelligence, value.toInt());
           },
         ),
         GenericSlider(
           title: Constants.affectionPlaceHolder,
           value: state.formData.affectionLevel.toDouble(),
           onChanged: (value) {
-            bloc.onCatModifyFormNumericFieldChange(CatModifyNumericFormField.affectionLevel, value.toInt());
+            widget.bloc.onCatModifyFormNumericFieldChange(CatModifyNumericFormField.affectionLevel, value.toInt());
           },
         ),
       ],
+    );
+  }
+
+  Widget _buildDropDownButtons(BuildContext context, CatModifyState state) {
+    return CatResourcesDropDownButton(
+      current: state.formData.imageId,
+      onChanged: (image) {
+        widget.bloc.onModifyFormTextFieldChange(CatModifyTextFormField.imageId, image);
+      },
     );
   }
 
   Widget _buildSaveButton(BuildContext context) {
     return SaveButton(
       onTap: () {
-        if (!formKey.currentState!.validate()) {
+        if (!widget.formKey.currentState!.validate()) {
           return;
         }
 
-        bloc.save();
+        widget.bloc.save();
       },
-    );
-  }
-
-  Widget _buildDropDownButtons(BuildContext context, CatModifyState state) {
-    final resources = [
-      BaseResources.cat1,
-      BaseResources.cat2,
-      BaseResources.cat3,
-      BaseResources.cat4,
-      BaseResources.cat5,
-      BaseResources.cat6,
-      BaseResources.cat7,
-    ];
-
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        CatImageDropDownButton(
-          current: state.formData.imageId,
-          items: resources,
-          onChanged: (image) {
-            if (image == null) {
-              return;
-            }
-
-            bloc.onModifyFormTextFieldChange(CatModifyTextFormField.imageId, image.name);
-          },
-        ),
-      ],
     );
   }
 

@@ -7,11 +7,11 @@ import 'package:flutter/material.dart';
 import '../../domain/models/cats.dart';
 import '../../domain/utils/common_routes.dart';
 import '../../domain/utils/constants.dart';
-import '../components/cat_image.dart';
-import '../components/cat_origin_text.dart';
-import '../components/custom_button.dart';
-import '../components/generic_scaffold.dart';
-import '../components/rating_bar.dart';
+import '../components/images/cat_image.dart';
+import '../components/texts/cat_origin_text.dart';
+import '../components/buttons/custom_button.dart';
+import '../components/containers/generic_scaffold.dart';
+import '../components/bars/rating_bar.dart';
 import 'generic_error_screen.dart';
 
 class CatDetailsScreen extends StatelessWidget {

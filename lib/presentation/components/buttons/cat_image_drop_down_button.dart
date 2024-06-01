@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../domain/utils/base_resources.dart';
-import '../../domain/utils/constants.dart';
-import 'ellipsis_text.dart';
+import '../../../domain/utils/base_resources.dart';
+import '../../../domain/utils/constants.dart';
+import '../texts/ellipsis_text.dart';
 
 class CatImageDropDownButton extends StatelessWidget {
   final String current;

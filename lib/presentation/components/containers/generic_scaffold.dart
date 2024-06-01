@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'module_app_bar.dart';
+import '../bars/module_app_bar.dart';
 
 final class GenericScaffold extends StatelessWidget {
   final String title;

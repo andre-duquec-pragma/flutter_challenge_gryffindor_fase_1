@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'ellipsis_text.dart';
+import '../texts/ellipsis_text.dart';
 
 class GenericSlider extends StatelessWidget {
   final String title;

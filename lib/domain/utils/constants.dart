@@ -32,4 +32,6 @@ final class Constants {
   static const String genericErrorMessage = "Something went wrong. Please try again";
 
   static const String catSaveSuccess = "¡Cat saved successfully!";
+
+  static const String slidersError = "All values must be greater than 0";
 }

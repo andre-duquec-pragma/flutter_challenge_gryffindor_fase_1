@@ -4,7 +4,7 @@ import '../../domain/bloc/splash/splash_bloc.dart';
 import '../../domain/bloc/splash/splash_states.dart';
 import '../../domain/utils/base_resources.dart';
 import '../../domain/utils/common_routes.dart';
-import '../components/padding_image.dart';
+import '../components/images/padding_image.dart';
 
 class SplashScreen extends StatefulWidget {
   final SplashBloc bloc = SplashBloc();

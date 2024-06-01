@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../../domain/utils/base_resources.dart';
-import '../../domain/utils/common_routes.dart';
-import '../../domain/utils/constants.dart';
-import 'custom_button.dart';
-import 'ellipsis_text.dart';
-import 'generic_asset_image.dart';
+import '../../../domain/utils/base_resources.dart';
+import '../../../domain/utils/common_routes.dart';
+import '../../../domain/utils/constants.dart';
+import '../buttons/custom_button.dart';
+import '../texts/ellipsis_text.dart';
+import '../images/generic_asset_image.dart';
 
 class EmptyResults extends StatelessWidget {
   final VoidCallback? onNavigationGoBack;

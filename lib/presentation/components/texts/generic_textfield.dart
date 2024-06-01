@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../domain/utils/validators/form_text_validator.dart';
+import '../../../domain/utils/validators/form_text_validator.dart';
 
 class GenericTextfield extends StatelessWidget {
   final String initialValue;

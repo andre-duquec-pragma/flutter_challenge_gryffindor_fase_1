@@ -1,7 +1,7 @@
-import '../../../domain/utils/errors/environment_exception.dart';
-import '../environment_keys.dart';
-import '../environment_values.dart';
-import '../environment_values_provider.dart';
+import '../../domain/utils/errors/environment_exception.dart';
+import '../../domain/environment/environment_keys.dart';
+import 'environment_values.dart';
+import '../../domain/environment/environment_values_provider.dart';
 
 class EnvironmentValuesProviderImpl extends EnvironmentValuesProvider {
   final EnvironmentValues _environment;

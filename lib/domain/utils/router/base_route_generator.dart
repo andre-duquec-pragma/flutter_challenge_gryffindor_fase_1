@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_challenge_gryffindor_fase_1/presentation/screens/cat_details_screen.dart';
-import 'package:flutter_challenge_gryffindor_fase_1/presentation/screens/cats_favorites_screen.dart';
 
+import '../../../presentation/screens/cat_details_screen.dart';
 import '../../../presentation/screens/cat_modify_screen.dart';
+import '../../../presentation/screens/cats_favorites_screen.dart';
 import '../../../presentation/screens/generic_error_screen.dart';
 import '../../../presentation/screens/splash_screen.dart';
 import '../../models/cats.dart';
 import '../routes.dart';
 import '../utils.dart';
+import 'route_generator.dart';
 
-final class BaseRouteGenerator {
+final class BaseRouteGenerator implements RouteGenerator {
   const BaseRouteGenerator();
 
   Route get _errorRoute {
@@ -18,6 +19,7 @@ final class BaseRouteGenerator {
     );
   }
 
+  @override
   List<Route<dynamic>> generateInitialRoute(String initialRoute) {
     return [
       MaterialPageRoute(
@@ -27,6 +29,7 @@ final class BaseRouteGenerator {
     ];
   }
 
+  @override
   Route? generateRoute(RouteSettings settings) {
     final route = Routes.init(value: settings.name ?? "");
 

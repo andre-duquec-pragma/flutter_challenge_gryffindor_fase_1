@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../domain/utils/router/base_route_generator.dart';
+import '../domain/utils/router/route_generator.dart';
 
 class App extends StatelessWidget {
-  final BaseRouteGenerator routeGenerator;
+  final RouteGenerator routeGenerator;
 
   const App({
     super.key,

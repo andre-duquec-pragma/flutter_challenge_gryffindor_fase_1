@@ -2,7 +2,7 @@ import 'dart:async';
 
 import '../bloc.dart';
 import 'splash_states.dart';
-import '../../../base/main_dependencies_builder.dart';
+import '../../environment/main_dependencies_builder.dart';
 
 class SplashBloc extends Bloc<SplashState> {
   SplashBloc() : super(initialState: const SplashState(status: SplashStatus.initial)) {

@@ -1,8 +1,8 @@
 import 'package:hive/hive.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../base/environment/environment_keys.dart';
-import '../../base/environment/environment_values_provider.dart';
+import '../../domain/environment/environment_keys.dart';
+import '../../domain/environment/environment_values_provider.dart';
 import '../../domain/models/cats.dart';
 import '../../domain/repositories/cats_favorites_repository.dart';
 import '../../domain/utils/errors/environment_exception.dart';

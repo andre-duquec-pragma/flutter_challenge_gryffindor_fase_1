@@ -1,12 +1,12 @@
-import 'package:get_it/get_it.dart';
-
+import '../../../infrastructure/repository/cats_favorites_repository_impl.dart';
 import '../../repositories/cats_favorites_repository.dart';
 import '../delete_favorite_cat_use_case.dart';
 
 final class DeleteFavoriteCatUseCaseImpl implements DeleteFavoriteCatUseCase {
   final CatsFavoritesRepository _repository;
 
-  DeleteFavoriteCatUseCaseImpl() : _repository = GetIt.I.get();
+  const DeleteFavoriteCatUseCaseImpl({CatsFavoritesRepository repository = const CatsFavoritesRepositoryImpl()})
+      : _repository = repository;
 
   @override
   Future invoke({required String id}) async {

@@ -1,5 +1,4 @@
-import 'package:get_it/get_it.dart';
-
+import '../../../infrastructure/repository/cats_favorites_repository_impl.dart';
 import '../../models/cats.dart';
 import '../../repositories/cats_favorites_repository.dart';
 import '../get_favorite_cat_use_case.dart';
@@ -7,7 +6,8 @@ import '../get_favorite_cat_use_case.dart';
 final class GetFavoritesCatsUseCaseImpl implements GetFavoritesCatUseCase {
   final CatsFavoritesRepository _repository;
 
-  GetFavoritesCatsUseCaseImpl() : _repository = GetIt.I.get();
+  const GetFavoritesCatsUseCaseImpl({CatsFavoritesRepository repository = const CatsFavoritesRepositoryImpl()})
+      : _repository = repository;
 
   @override
   Future<Cat?> invoke({required String id}) async {

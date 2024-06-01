@@ -4,7 +4,6 @@ import '../../../application/screens/cat_details_screen.dart';
 import '../../../application/screens/cat_modify_screen.dart';
 import '../../../application/screens/cats_favorites_screen.dart';
 import '../../../application/screens/generic_error_screen.dart';
-import '../../../application/screens/splash_screen.dart';
 import '../../models/cats.dart';
 import '../routes.dart';
 import '../utils.dart';
@@ -23,8 +22,8 @@ final class BaseRouteGenerator implements RouteGenerator {
   List<Route<dynamic>> generateInitialRoute(String initialRoute) {
     return [
       MaterialPageRoute(
-        settings: RouteSettings(name: Routes.root),
-        builder: (context) => SplashScreen(),
+        builder: (context) => CatsFavoritesScreen(),
+        fullscreenDialog: true,
       ),
     ];
   }
@@ -36,19 +35,11 @@ final class BaseRouteGenerator implements RouteGenerator {
     switch (route) {
       case Routes.error:
         return _errorRoute;
-      case Routes.favorites:
-        return _generateCatFavoritesRoute();
       case Routes.catDetails:
         return _generateCatDetailsRoute(settings);
       case Routes.catModify:
         return _generateCatModifyRoute(settings);
     }
-  }
-
-  Route? _generateCatFavoritesRoute() {
-    return MaterialPageRoute(
-      builder: (context) => CatsFavoritesScreen(),
-    );
   }
 
   Route? _generateCatDetailsRoute(RouteSettings settings) {

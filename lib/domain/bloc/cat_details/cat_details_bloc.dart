@@ -1,19 +1,21 @@
-import 'dart:async';
-
 import '../../models/cats.dart';
 import '../../use_cases/delete_favorite_cat_use_case.dart';
 import '../../use_cases/get_favorite_cat_use_case.dart';
+import '../../use_cases/impl/delete_favorite_cat_use_case_impl.dart';
+import '../../use_cases/impl/get_favorite_cat_use_case_impl.dart';
 import '../bloc.dart';
 import 'cat_details_state.dart';
-import 'package:get_it/get_it.dart';
 
 class CatDetailsBloc extends Bloc<CatDetailsState> {
   final GetFavoritesCatUseCase _getFavoritesCatUseCase;
   final DeleteFavoriteCatUseCase _deleteFavoriteCatUseCase;
 
-  CatDetailsBloc({required Cat cat})
-      : _getFavoritesCatUseCase = GetIt.I.get(),
-        _deleteFavoriteCatUseCase = GetIt.I.get(),
+  CatDetailsBloc({
+    GetFavoritesCatUseCase getFavoritesCatUseCase = const GetFavoritesCatsUseCaseImpl(),
+    DeleteFavoriteCatUseCase deleteFavoriteCatUseCase = const DeleteFavoriteCatUseCaseImpl(),
+    required Cat cat,
+  })  : _getFavoritesCatUseCase = getFavoritesCatUseCase,
+        _deleteFavoriteCatUseCase = deleteFavoriteCatUseCase,
         super(initialState: CatDetailsStarted(data: cat));
 
   Future delete(Cat data) async {

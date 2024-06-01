@@ -12,9 +12,6 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.6
-  
-  # External packages
-  get_it: ^7.7.0
 
 dev_dependencies:
   flutter_test:

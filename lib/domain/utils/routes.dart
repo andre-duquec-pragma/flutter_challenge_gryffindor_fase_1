@@ -1,6 +1,5 @@
 enum Routes {
   error(value: ""),
-  favorites(value: "favorites"),
   catDetails(value: "cat_detail"),
   catModify(value: "cat_modify");
 

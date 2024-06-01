@@ -1,9 +1,6 @@
-import 'dart:async';
-
-import 'package:get_it/get_it.dart';
-
 import '../../models/cats.dart';
 import '../../use_cases/add_favorite_cat_use_case.dart';
+import '../../use_cases/impl/add_favorite_cat_use_case_impl.dart';
 import '../../utils/constants.dart';
 import '../bloc.dart';
 import 'cat_modify_states.dart';
@@ -14,8 +11,9 @@ final class CatModifyBloc extends Bloc<CatModifyState> {
   final Cat? cat;
 
   CatModifyBloc({
+    AddFavoriteCatUseCase addFavoriteCatUseCase = const AddFavoriteCatUseCaseImpl(),
     this.cat,
-  })  : _addFavoriteCatUseCase = GetIt.I.get(),
+  })  : _addFavoriteCatUseCase = addFavoriteCatUseCase,
         super(initialState: CatModifyInitialState(cat: cat));
 
   Future onModifyFormTextFieldChange(

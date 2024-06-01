@@ -1,14 +1,11 @@
 import 'dart:async';
 
+import '../bloc.dart';
 import 'splash_states.dart';
 import '../../../base/main_dependencies_builder.dart';
 
-class SplashBloc {
-  final StreamController<SplashState> stream = StreamController();
-
-  SplashBloc() : super() {
-    stream.sink.add(const SplashState(status: SplashStatus.initial));
-
+class SplashBloc extends Bloc<SplashState> {
+  SplashBloc() : super(initialState: const SplashState(status: SplashStatus.initial)) {
     _start();
   }
 
@@ -18,7 +15,7 @@ class SplashBloc {
 
     await Future.delayed(const Duration(seconds: 1));
 
-    stream.add(const SplashState(
+    emit(const SplashState(
       status: SplashStatus.success,
     ));
   }

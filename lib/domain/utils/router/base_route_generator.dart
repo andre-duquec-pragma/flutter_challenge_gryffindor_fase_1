@@ -6,8 +6,8 @@ import '../../../presentation/screens/cat_modify_screen.dart';
 import '../../../presentation/screens/generic_error_screen.dart';
 import '../../../presentation/screens/splash_screen.dart';
 import '../../models/cats.dart';
-import '../common_routes.dart';
-import '../common_utils.dart';
+import '../routes.dart';
+import '../utils.dart';
 
 final class BaseRouteGenerator {
   const BaseRouteGenerator();
@@ -18,17 +18,26 @@ final class BaseRouteGenerator {
     );
   }
 
+  List<Route<dynamic>> generateInitialRoute(String initialRoute) {
+    return [
+      MaterialPageRoute(
+        settings: RouteSettings(name: Routes.root),
+        builder: (context) => SplashScreen(),
+      ),
+    ];
+  }
+
   Route? generateRoute(RouteSettings settings) {
-    final route = CommonRoutes.init(value: settings.name ?? "");
+    final route = Routes.init(value: settings.name ?? "");
 
     switch (route) {
-      case CommonRoutes.error:
+      case Routes.error:
         return _errorRoute;
-      case CommonRoutes.favoriteCatsPackages:
+      case Routes.favorites:
         return _generateCatFavoritesRoute();
-      case CommonRoutes.catDetailsPackage:
+      case Routes.catDetails:
         return _generateCatDetailsRoute(settings);
-      case CommonRoutes.catModifyPackage:
+      case Routes.catModify:
         return _generateCatModifyRoute(settings);
     }
   }
@@ -40,7 +49,7 @@ final class BaseRouteGenerator {
   }
 
   Route? _generateCatDetailsRoute(RouteSettings settings) {
-    final data = CommonUtils().safeCast<Cat>(data: settings.arguments);
+    final data = Utils().safeCast<Cat>(data: settings.arguments);
 
     if (data == null) {
       return _errorRoute;
@@ -52,19 +61,10 @@ final class BaseRouteGenerator {
   }
 
   Route? _generateCatModifyRoute(RouteSettings settings) {
-    final data = CommonUtils().safeCast<Cat>(data: settings.arguments);
+    final data = Utils().safeCast<Cat>(data: settings.arguments);
 
     return MaterialPageRoute(
       builder: (context) => CatModifyScreen(cat: data),
     );
-  }
-
-  List<Route<dynamic>> generateInitialRoute(String initialRoute) {
-    return [
-      MaterialPageRoute(
-        settings: RouteSettings(name: CommonRoutes.root),
-        builder: (context) => SplashScreen(),
-      ),
-    ];
   }
 }

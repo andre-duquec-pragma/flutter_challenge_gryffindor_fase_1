@@ -3,27 +3,27 @@ import 'dart:async';
 import 'package:get_it/get_it.dart';
 
 import '../../use_cases/get_favorites_cat_list_use_case.dart';
+import '../bloc.dart';
 import 'cats_favorites_states.dart';
 
-final class CatsFavoritesBloc {
+final class CatsFavoritesBloc extends Bloc<CatsFavoritesState> {
   final GetFavoritesCatListUseCase _getFavoritesCatListUseCase;
 
-  final StreamController<CatsFavoritesState> stream = StreamController();
-
-  CatsFavoritesBloc() : _getFavoritesCatListUseCase = GetIt.I.get() {
-    stream.sink.add(const CatsFavoritesInitialState());
+  CatsFavoritesBloc()
+      : _getFavoritesCatListUseCase = GetIt.I.get(),
+        super(initialState: const CatsFavoritesInitialState()) {
     loadCatsFavorites();
   }
 
   Future loadCatsFavorites() async {
-    stream.sink.add(const CatsFavoritesLoadingState());
+    emit(const CatsFavoritesLoadingState());
 
     try {
       final result = await _getFavoritesCatListUseCase.invoke();
 
-      stream.sink.add(CatsFavoritesLoadedState(data: result));
+      emit(CatsFavoritesLoadedState(data: result));
     } catch (_) {
-      stream.sink.add(const CatsFavoritesFailureState());
+      emit(const CatsFavoritesFailureState());
     }
   }
 }

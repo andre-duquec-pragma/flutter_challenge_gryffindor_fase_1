@@ -1,4 +1,4 @@
-class CommonUtils {
+class Utils {
   T? safeCast<T>({required Object? data}) {
     try {
       return data as T;

@@ -9,11 +9,13 @@ class FavoritesList extends StatelessWidget {
   final List<Cat> data;
 
   final VoidCallback onAddCatButtonPressed;
+  final Function(Cat data) onCardTap;
 
   const FavoritesList({
     super.key,
     required this.data,
     required this.onAddCatButtonPressed,
+    required this.onCardTap,
   });
 
   @override
@@ -39,7 +41,10 @@ class FavoritesList extends StatelessWidget {
       crossAxisSpacing: spacing,
       mainAxisSpacing: spacing,
       children: data.map((cat) {
-        return FavoriteCard(data: cat);
+        return FavoriteCard(
+          data: cat,
+          onTap: onCardTap,
+        );
       }).toList(),
     );
   }

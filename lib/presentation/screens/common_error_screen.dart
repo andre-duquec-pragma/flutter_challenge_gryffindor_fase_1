@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../domain/utils/base_resources.dart';
+import '../../domain/utils/resources.dart';
 import '../components/buttons/custom_button.dart';
 import '../components/images/generic_asset_image.dart';
 
@@ -27,7 +27,7 @@ class CommonErrorScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 GenericAssetImage(
-                  resourceName: BaseResources.error.value,
+                  resourceName: Resources.error.value,
                 ),
                 CustomButton(
                   onTap: onBackButtonPressed,

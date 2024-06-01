@@ -3,17 +3,28 @@ import 'package:flutter/material.dart';
 import '../../domain/bloc/cats_favorites/cats_favorites_bloc.dart';
 import '../../domain/bloc/cats_favorites/cats_favorites_states.dart';
 import '../../domain/models/cats.dart';
-import '../../domain/utils/common_routes.dart';
+import '../../domain/utils/routes.dart';
 import '../components/containers/empty_results.dart';
 import '../components/lists/favorites_list.dart';
 import '../components/loading/generic_loading.dart';
 import '../components/containers/gradient_background.dart';
 import 'generic_error_screen.dart';
 
-class CatsFavoritesScreen extends StatelessWidget {
+class CatsFavoritesScreen extends StatefulWidget {
   final CatsFavoritesBloc bloc = CatsFavoritesBloc();
 
   CatsFavoritesScreen({super.key});
+
+  @override
+  State<StatefulWidget> createState() => _CatsFavoritesScreenState();
+}
+
+class _CatsFavoritesScreenState extends State<CatsFavoritesScreen> {
+  @override
+  void dispose() {
+    widget.bloc.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +43,7 @@ class CatsFavoritesScreen extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: StreamBuilder(
-          stream: bloc.stream.stream,
+          stream: widget.bloc.stateStream,
           builder: _builder,
         ),
       ),
@@ -58,14 +69,23 @@ class CatsFavoritesScreen extends StatelessWidget {
 
   Widget _buildForSuccessStatus(BuildContext context, List<Cat> data) {
     if (data.isEmpty) {
-      return EmptyResults(onNavigationGoBack: bloc.loadCatsFavorites);
+      return EmptyResults(onButtonTap: () {
+        Navigator.pushNamed(context, Routes.catModify.value).then((_) {
+          widget.bloc.loadCatsFavorites();
+        });
+      });
     }
 
     return FavoritesList(
       data: data,
       onAddCatButtonPressed: () {
-        Navigator.pushNamed(context, CommonRoutes.catModifyPackage.value).then((_) {
-          bloc.loadCatsFavorites();
+        Navigator.pushNamed(context, Routes.catModify.value).then((_) {
+          widget.bloc.loadCatsFavorites();
+        });
+      },
+      onCardTap: (data) {
+        Navigator.pushNamed(context, Routes.catDetails.value, arguments: data).then((_) {
+          widget.bloc.loadCatsFavorites();
         });
       },
     );

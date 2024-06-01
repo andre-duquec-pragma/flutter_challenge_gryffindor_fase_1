@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../domain/utils/base_resources.dart';
+import '../../../domain/utils/resources.dart';
 import 'cat_image_drop_down_button.dart';
 
 class CatResourcesDropDownButton extends StatelessWidget {
@@ -16,13 +16,13 @@ class CatResourcesDropDownButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final resources = [
-      BaseResources.cat1,
-      BaseResources.cat2,
-      BaseResources.cat3,
-      BaseResources.cat4,
-      BaseResources.cat5,
-      BaseResources.cat6,
-      BaseResources.cat7,
+      Resources.cat1,
+      Resources.cat2,
+      Resources.cat3,
+      Resources.cat4,
+      Resources.cat5,
+      Resources.cat6,
+      Resources.cat7,
     ];
 
     return Column(

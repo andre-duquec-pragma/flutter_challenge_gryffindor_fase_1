@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../domain/bloc/splash/splash_bloc.dart';
 import '../../domain/bloc/splash/splash_states.dart';
-import '../../domain/utils/base_resources.dart';
-import '../../domain/utils/common_routes.dart';
+import '../../domain/utils/resources.dart';
+import '../../domain/utils/routes.dart';
 import '../components/images/padding_image.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -27,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _listenBloc() {
-    widget.bloc.stream.stream.listen(
+    widget.bloc.stateStream.listen(
       (state) {
         if (state.status != SplashStatus.success) {
           return;
@@ -35,8 +35,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
         Navigator.pushNamedAndRemoveUntil(
           context,
-          CommonRoutes.favoriteCatsPackages.value,
-          (route) => route.settings.name == CommonRoutes.root,
+          Routes.favorites.value,
+          (route) => route.settings.name == Routes.root,
         );
       },
     );
@@ -44,7 +44,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void dispose() {
-    widget.bloc.stream.close();
+    widget.bloc.close();
     super.dispose();
   }
 
@@ -54,7 +54,7 @@ class _SplashScreenState extends State<SplashScreen> {
       child: Container(
         decoration: BoxDecoration(color: Theme.of(context).primaryColor),
         child: PaddingImage(
-          assetName: BaseResources.splash.value,
+          assetName: Resources.splash.value,
           padding: const EdgeInsets.all(50),
         ),
       ),

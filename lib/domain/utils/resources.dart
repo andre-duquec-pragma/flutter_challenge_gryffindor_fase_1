@@ -1,4 +1,4 @@
-enum BaseResources {
+enum Resources {
   cat1(name: "cat1.png"),
   cat2(name: "cat2.png"),
   cat3(name: "cat3.png"),
@@ -14,8 +14,8 @@ enum BaseResources {
   final String value;
   final String name;
 
-  const BaseResources({required this.name}) : value = "assets/images/$name";
+  const Resources({required this.name}) : value = "assets/images/$name";
 
-  factory BaseResources.init({required String name}) =>
-      values.firstWhere(((e) => e.name == name), orElse: () => BaseResources.cat1);
+  factory Resources.init({required String name}) =>
+      values.firstWhere(((e) => e.name == name), orElse: () => Resources.cat1);
 }

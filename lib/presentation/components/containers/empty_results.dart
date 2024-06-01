@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 
-import '../../../domain/utils/base_resources.dart';
-import '../../../domain/utils/common_routes.dart';
+import '../../../domain/utils/resources.dart';
 import '../../../domain/utils/constants.dart';
 import '../buttons/custom_button.dart';
 import '../texts/ellipsis_text.dart';
 import '../images/generic_asset_image.dart';
 
 class EmptyResults extends StatelessWidget {
-  final VoidCallback? onNavigationGoBack;
+  final VoidCallback onButtonTap;
 
-  const EmptyResults({super.key, this.onNavigationGoBack});
+  const EmptyResults({super.key, required this.onButtonTap});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +32,7 @@ class EmptyResults extends StatelessWidget {
 
   Widget _buildImage() {
     return GenericAssetImage(
-      resourceName: BaseResources.empty.value,
+      resourceName: Resources.empty.value,
     );
   }
 
@@ -54,14 +53,7 @@ class EmptyResults extends StatelessWidget {
   Widget _buildButton(BuildContext context) {
     return CustomButton(
       text: Constants.goToCatModifyMessage,
-      onTap: () {
-        Navigator.pushNamed(context, CommonRoutes.catModifyPackage.value).then((_) {
-          if (onNavigationGoBack == null) {
-            return;
-          }
-          onNavigationGoBack!();
-        });
-      },
+      onTap: onButtonTap,
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../domain/models/cats.dart';
-import '../../../domain/utils/base_resources.dart';
+import '../../../domain/utils/resources.dart';
 
 class CatImage extends StatelessWidget {
   final Cat cat;
@@ -16,7 +16,7 @@ class CatImage extends StatelessWidget {
   }
 
   AssetImage _getAsset() {
-    final resource = BaseResources.init(name: cat.imageId);
+    final resource = Resources.init(name: cat.imageId);
 
     return AssetImage(resource.value);
   }

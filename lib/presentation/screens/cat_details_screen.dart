@@ -5,7 +5,7 @@ import '../../domain/models/cat_detail.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/models/cats.dart';
-import '../../domain/utils/common_routes.dart';
+import '../../domain/utils/routes.dart';
 import '../../domain/utils/constants.dart';
 import '../components/images/cat_image.dart';
 import '../components/texts/cat_origin_text.dart';
@@ -14,17 +14,28 @@ import '../components/containers/generic_scaffold.dart';
 import '../components/bars/rating_bar.dart';
 import 'generic_error_screen.dart';
 
-class CatDetailsScreen extends StatelessWidget {
+class CatDetailsScreen extends StatefulWidget {
   final CatDetailsBloc bloc;
 
   CatDetailsScreen({super.key, required Cat cat}) : bloc = CatDetailsBloc(cat: cat);
+
+  @override
+  State<StatefulWidget> createState() => _CatDetailsScreenState();
+}
+
+class _CatDetailsScreenState extends State<CatDetailsScreen> {
+  @override
+  void dispose() {
+    widget.bloc.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return GenericScaffold(
       title: Constants.navigationHeaderName,
       body: StreamBuilder(
-        stream: bloc.stream.stream,
+        stream: widget.bloc.stateStream,
         builder: _builder,
       ),
     );
@@ -35,6 +46,14 @@ class CatDetailsScreen extends StatelessWidget {
       return const GenericErrorScreen();
     }
 
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (snapshot.data is! CatDeletedState) {
+        return;
+      }
+
+      showDeleteSuccess(context);
+    });
+
     switch (snapshot.data!) {
       case CatDetailsStarted(details: final data):
         return _buildDetails(context, data);
@@ -43,7 +62,6 @@ class CatDetailsScreen extends StatelessWidget {
       case CatDetailErrorState():
         return const GenericErrorScreen();
       case CatDeletedState(details: final data):
-        showDeleteSuccess(context);
         return _buildDetails(context, data);
     }
   }
@@ -148,8 +166,8 @@ class CatDetailsScreen extends StatelessWidget {
         CustomButton(
           text: Constants.editButton,
           onTap: () {
-            Navigator.pushNamed(context, CommonRoutes.catModifyPackage.value, arguments: cat.details).then((_) {
-              bloc.reload();
+            Navigator.pushNamed(context, Routes.catModify.value, arguments: cat.details).then((_) {
+              widget.bloc.reload();
             });
           },
         ),
@@ -157,7 +175,7 @@ class CatDetailsScreen extends StatelessWidget {
         CustomButton(
           text: Constants.deleteButton,
           onTap: () {
-            bloc.delete(cat);
+            widget.bloc.delete(cat);
           },
         ),
       ],

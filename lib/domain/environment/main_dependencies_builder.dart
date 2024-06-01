@@ -1,8 +1,4 @@
-import 'dart:convert';
-
-import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 import '../repositories/cats_favorites_repository.dart';
 import '../use_cases/add_favorite_cat_use_case.dart';
@@ -14,9 +10,6 @@ import '../use_cases/get_favorites_cat_list_use_case.dart';
 import '../use_cases/impl/delete_favorite_cat_use_case_impl.dart';
 import '../use_cases/impl/get_favorite_cat_use_case_impl.dart';
 import '../use_cases/impl/get_favorites_cat_list_use_case_impl.dart';
-import '../../infrastructure/environment/environment_values.dart';
-import 'environment_values_provider.dart';
-import '../../infrastructure/environment/environment_values_provider_impl.dart';
 
 class MainDependenciesBuilder {
   MainDependenciesBuilder();
@@ -24,22 +17,13 @@ class MainDependenciesBuilder {
   start() async {
     final injector = GetIt.I;
 
-    final String confidentContent = await rootBundle.loadString("assets/config/main.json");
-
-    Map configData = jsonDecode(confidentContent);
-
-    EnvironmentValues environment = EnvironmentValues(data: configData);
-    injector.registerSingleton<EnvironmentValuesProvider>(EnvironmentValuesProviderImpl(environment: environment));
-
     // Repositories
-    injector.registerFactory<CatsFavoritesRepository>(() => CatsFavoritesRepositoryImpl());
+    injector.registerFactory<CatsFavoritesRepository>(() => const CatsFavoritesRepositoryImpl());
 
     // Use Cases
     injector.registerFactory<AddFavoriteCatUseCase>(() => AddFavoriteCatUseCaseImpl());
     injector.registerFactory<GetFavoritesCatUseCase>(() => GetFavoritesCatsUseCaseImpl());
     injector.registerFactory<DeleteFavoriteCatUseCase>(() => DeleteFavoriteCatUseCaseImpl());
     injector.registerFactory<GetFavoritesCatListUseCase>(() => GetFavoritesCatListUseCaseImpl());
-
-    await Hive.initFlutter();
   }
 }

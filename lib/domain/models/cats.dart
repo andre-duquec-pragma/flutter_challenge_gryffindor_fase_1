@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class Cat {
   final String id;
   final String breedName;
@@ -62,32 +60,4 @@ class Cat {
         imageId.hashCode ^
         description.hashCode;
   }
-
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'id': id,
-      'breedName': breedName,
-      'origin': origin,
-      'affectionLevel': affectionLevel,
-      'intelligence': intelligence,
-      'imageId': imageId,
-      'description': description,
-    };
-  }
-
-  factory Cat.fromMap(Map<String, dynamic> map) {
-    return Cat(
-      id: map['id'] as String,
-      breedName: map['breedName'] as String,
-      origin: map['origin'] as String,
-      affectionLevel: map['affectionLevel'] as int,
-      intelligence: map['intelligence'] as int,
-      imageId: map['imageId'] as String,
-      description: map['description'] as String,
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory Cat.fromJson(String source) => Cat.fromMap(json.decode(source) as Map<String, dynamic>);
 }

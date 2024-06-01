@@ -1,57 +1,42 @@
-import 'package:hive/hive.dart';
-import 'package:get_it/get_it.dart';
-
-import '../../domain/environment/environment_keys.dart';
-import '../../domain/environment/environment_values_provider.dart';
 import '../../domain/models/cats.dart';
 import '../../domain/repositories/cats_favorites_repository.dart';
-import '../../domain/utils/errors/environment_exception.dart';
 
 final class CatsFavoritesRepositoryImpl implements CatsFavoritesRepository {
-  final EnvironmentValuesProvider _environmentProvider;
+  static List<Cat> database = [];
 
-  CatsFavoritesRepositoryImpl() : _environmentProvider = GetIt.I.get();
-
-  Future<Box<String>> _start() async {
-    final key = _environmentProvider.get(EnvironmentKeys.favoritesLocalDB);
-
-    if (key.isEmpty) throw EnvironmentException();
-
-    await Hive.openBox<String>(key);
-
-    return Hive.box(key);
-  }
+  const CatsFavoritesRepositoryImpl();
 
   @override
-  Future<Cat?> get({
-    required String id,
-  }) async {
-    final box = await _start();
-    final element = box.get(id);
-
-    if (element == null) return null;
-
-    return Cat.fromJson(element);
+  Future<Cat?> get({required String id}) async {
+    try {
+      return CatsFavoritesRepositoryImpl.database.firstWhere((item) => item.id == id);
+    } catch (e) {
+      return null;
+    }
   }
 
   @override
   Future<List<Cat>> getAll() async {
-    final box = await _start();
-
-    return box.values.map((e) => Cat.fromJson(e)).toList();
+    return CatsFavoritesRepositoryImpl.database.toList();
   }
 
   @override
   Future add({required Cat cat}) async {
-    final box = await _start();
+    final database = CatsFavoritesRepositoryImpl.database;
 
-    await box.put(cat.id, cat.toJson());
+    final existingCat = await get(id: cat.id);
+
+    if (existingCat == null) {
+      database.add(cat);
+      return;
+    }
+
+    final index = database.indexOf(existingCat);
+    database[index] = cat;
   }
 
   @override
   Future delete({required String id}) async {
-    final box = await _start();
-
-    box.delete(id);
+    CatsFavoritesRepositoryImpl.database.removeWhere((item) => item.id == id);
   }
 }

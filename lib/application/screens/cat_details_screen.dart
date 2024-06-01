@@ -150,12 +150,12 @@ class _CatDetailsScreenState extends State<CatDetailsScreen> {
         RatingBar(
           ratingImage: ratingImage,
           rating: cat.intelligence,
-          text: "Intelligence",
+          text: Constants.intelligentPlaceHolder,
         ),
         RatingBar(
           ratingImage: ratingImage,
           rating: cat.affectionLevel,
-          text: "Affection level",
+          text: Constants.affectionPlaceHolder,
         ),
       ],
     );

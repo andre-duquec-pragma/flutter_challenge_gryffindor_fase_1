@@ -1,1 +1,0 @@
-class EnvironmentException extends Error {}

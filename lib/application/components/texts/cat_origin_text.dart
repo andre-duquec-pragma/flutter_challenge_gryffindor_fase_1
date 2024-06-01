@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../domain/utils/constants.dart';
 import 'ellipsis_text.dart';
 
 class CatOriginText extends StatelessWidget {
@@ -10,7 +11,7 @@ class CatOriginText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return EllipsisText(
-      text: "Origin: $origin",
+      text: "${Constants.originPlaceHolder}: $origin",
       style: TextStyle(color: Theme.of(context).primaryColor),
       maxLines: 2,
     );

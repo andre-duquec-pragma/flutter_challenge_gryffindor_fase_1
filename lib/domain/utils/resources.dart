@@ -8,7 +8,6 @@ enum Resources {
   cat7(name: "cat7.png"),
   error(name: "error_illustration.png"),
   empty(name: "empty_illustration.png"),
-  splash(name: "splash.png"),
   favoritesCatsPackageImage(name: "favorites_cats_package.png");
 
   final String value;

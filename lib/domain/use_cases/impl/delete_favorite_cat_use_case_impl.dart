@@ -5,8 +5,9 @@ import '../delete_favorite_cat_use_case.dart';
 final class DeleteFavoriteCatUseCaseImpl implements DeleteFavoriteCatUseCase {
   final CatsFavoritesRepository _repository;
 
-  const DeleteFavoriteCatUseCaseImpl({CatsFavoritesRepository repository = const CatsFavoritesRepositoryImpl()})
-      : _repository = repository;
+  const DeleteFavoriteCatUseCaseImpl({
+    CatsFavoritesRepository repository = const CatsFavoritesRepositoryImpl(),
+  }) : _repository = repository;
 
   @override
   Future invoke({required String id}) async {

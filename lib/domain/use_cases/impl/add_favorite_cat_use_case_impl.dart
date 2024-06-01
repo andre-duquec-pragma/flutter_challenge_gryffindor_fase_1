@@ -6,8 +6,9 @@ import '../add_favorite_cat_use_case.dart';
 final class AddFavoriteCatUseCaseImpl implements AddFavoriteCatUseCase {
   final CatsFavoritesRepository _repository;
 
-  const AddFavoriteCatUseCaseImpl({CatsFavoritesRepository repository = const CatsFavoritesRepositoryImpl()})
-      : _repository = repository;
+  const AddFavoriteCatUseCaseImpl({
+    CatsFavoritesRepository repository = const CatsFavoritesRepositoryImpl(),
+  }) : _repository = repository;
 
   @override
   Future invoke({required Cat cat}) async {

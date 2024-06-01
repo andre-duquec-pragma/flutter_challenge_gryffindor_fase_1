@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_challenge_gryffindor_fase_1/presentation/components/buttons/cat_resources_drop_down_button.dart';
+import 'package:flutter_challenge_gryffindor_fase_1/application/components/buttons/cat_resources_drop_down_button.dart';
 
 import '../../domain/bloc/cat_modify/cat_modify_bloc.dart';
 import '../../domain/bloc/cat_modify/cat_modify_states.dart';

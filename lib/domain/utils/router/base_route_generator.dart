@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../../presentation/screens/cat_details_screen.dart';
-import '../../../presentation/screens/cat_modify_screen.dart';
-import '../../../presentation/screens/cats_favorites_screen.dart';
-import '../../../presentation/screens/generic_error_screen.dart';
-import '../../../presentation/screens/splash_screen.dart';
+import '../../../application/screens/cat_details_screen.dart';
+import '../../../application/screens/cat_modify_screen.dart';
+import '../../../application/screens/cats_favorites_screen.dart';
+import '../../../application/screens/generic_error_screen.dart';
+import '../../../application/screens/splash_screen.dart';
 import '../../models/cats.dart';
 import '../routes.dart';
 import '../utils.dart';

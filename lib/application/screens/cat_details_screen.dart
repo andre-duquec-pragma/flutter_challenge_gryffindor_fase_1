@@ -1,6 +1,5 @@
 import '../../domain/bloc/cat_details/cat_details_bloc.dart';
 import '../../domain/bloc/cat_details/cat_details_state.dart';
-import '../../domain/models/cat_detail.dart';
 
 import 'package:flutter/material.dart';
 
@@ -55,36 +54,40 @@ class _CatDetailsScreenState extends State<CatDetailsScreen> {
     });
 
     switch (snapshot.data!) {
-      case CatDetailsStarted(details: final data):
+      case CatDetailsStarted(data: final data):
         return _buildDetails(context, data);
-      case CatLoadedState(details: final data):
+      case CatLoadedState(data: final data):
         return _buildDetails(context, data);
       case CatDetailErrorState():
         return const GenericErrorScreen();
-      case CatDeletedState(details: final data):
+      case CatDeletedState(data: final data):
         return _buildDetails(context, data);
     }
   }
 
-  Widget _buildDetails(BuildContext context, CatDetail data) {
+  Widget _buildDetails(BuildContext context, Cat data) {
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          _buildImageRow(data.details),
-          const SizedBox(height: 20),
+          _buildImageRow(data),
+          _buildSpacer(),
           _buildHeader(context, data),
-          const SizedBox(height: 20),
-          _buildDescription(data.details),
-          const SizedBox(height: 20),
-          _buildRatings(data.details),
+          _buildSpacer(),
+          _buildDescription(data),
+          _buildSpacer(),
+          _buildRatings(data),
           const Spacer(),
           _buildActions(context, data),
         ],
       ),
     );
+  }
+
+  Widget _buildSpacer() {
+    return const SizedBox(height: 20);
   }
 
   Widget _buildImageRow(Cat data) {
@@ -100,15 +103,15 @@ class _CatDetailsScreenState extends State<CatDetailsScreen> {
     );
   }
 
-  Widget _buildHeader(BuildContext context, CatDetail data) {
+  Widget _buildHeader(BuildContext context, Cat data) {
     return Align(
       alignment: Alignment.centerLeft,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          _buildTitle(data.details),
-          CatOriginText(origin: data.details.origin),
+          _buildTitle(data),
+          CatOriginText(origin: data.origin),
         ],
       ),
     );
@@ -158,7 +161,7 @@ class _CatDetailsScreenState extends State<CatDetailsScreen> {
     );
   }
 
-  Widget _buildActions(BuildContext context, CatDetail cat) {
+  Widget _buildActions(BuildContext context, Cat cat) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -166,7 +169,7 @@ class _CatDetailsScreenState extends State<CatDetailsScreen> {
         CustomButton(
           text: Constants.editButton,
           onTap: () {
-            Navigator.pushNamed(context, Routes.catModify.value, arguments: cat.details).then((_) {
+            Navigator.pushNamed(context, Routes.catModify.value, arguments: cat).then((_) {
               widget.bloc.reload();
             });
           },

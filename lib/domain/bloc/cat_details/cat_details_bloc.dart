@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import '../../models/cat_detail.dart';
 import '../../models/cats.dart';
 import '../../use_cases/delete_favorite_cat_use_case.dart';
 import '../../use_cases/get_favorite_cat_use_case.dart';
@@ -15,39 +14,24 @@ class CatDetailsBloc extends Bloc<CatDetailsState> {
   CatDetailsBloc({required Cat cat})
       : _getFavoritesCatUseCase = GetIt.I.get(),
         _deleteFavoriteCatUseCase = GetIt.I.get(),
-        super(initialState: CatDetailsStarted(details: CatDetail(details: cat))) {
-    loadCatDetails(cat);
-  }
+        super(initialState: CatDetailsStarted(data: cat));
 
-  Future loadCatDetails(Cat cat) async {
-    try {
-      final isFavorite = await _getFavoritesCatUseCase.invoke(id: cat.id) != null;
+  Future delete(Cat data) async {
+    await _deleteFavoriteCatUseCase.invoke(id: data.id);
 
-      final details = CatDetail(
-        details: cat,
-        isFavorite: isFavorite,
-      );
-
-      emit(CatLoadedState(details: details));
-    } catch (_) {
-      emit(CatDetailErrorState(details: CatDetail(details: cat)));
-    }
-  }
-
-  Future delete(CatDetail data) async {
-    await _deleteFavoriteCatUseCase.invoke(id: data.details.id);
-    final newDetails = data.copyWith(isFavorite: false);
-
-    final state = CatDeletedState(details: newDetails);
-    emit(state);
+    final newState = CatDeletedState(data: data);
+    emit(newState);
   }
 
   Future reload() async {
-    final cat = await _getFavoritesCatUseCase.invoke(id: state.details.details.id);
+    final cat = await _getFavoritesCatUseCase.invoke(id: state.data.id);
 
-    final newDetails = state.details.copyWith(details: cat);
-    final newState = state.copyWith(details: newDetails);
+    if (cat == null) {
+      emit(CatDeletedState(data: state.data));
+      return;
+    }
 
+    final newState = CatLoadedState(data: cat);
     emit(newState);
   }
 }

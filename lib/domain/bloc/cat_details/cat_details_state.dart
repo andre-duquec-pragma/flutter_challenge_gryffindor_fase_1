@@ -1,53 +1,23 @@
-import '../../models/cat_detail.dart';
+import '../../models/cats.dart';
 
 sealed class CatDetailsState {
-  final CatDetail details;
+  final Cat data;
 
-  const CatDetailsState({required this.details});
-
-  CatDetailsState copyWith({CatDetail? details});
+  const CatDetailsState({required this.data});
 }
 
 final class CatDetailsStarted extends CatDetailsState {
-  const CatDetailsStarted({required super.details});
-
-  @override
-  CatDetailsState copyWith({CatDetail? details}) {
-    return CatDetailsStarted(
-      details: details ?? this.details,
-    );
-  }
+  const CatDetailsStarted({required super.data});
 }
 
 final class CatLoadedState extends CatDetailsState {
-  const CatLoadedState({required super.details});
-
-  @override
-  CatDetailsState copyWith({CatDetail? details}) {
-    return CatLoadedState(
-      details: details ?? this.details,
-    );
-  }
+  const CatLoadedState({required super.data});
 }
 
 final class CatDetailErrorState extends CatDetailsState {
-  const CatDetailErrorState({required super.details});
-
-  @override
-  CatDetailsState copyWith({CatDetail? details}) {
-    return CatDetailErrorState(
-      details: details ?? this.details,
-    );
-  }
+  const CatDetailErrorState({required super.data});
 }
 
 final class CatDeletedState extends CatDetailsState {
-  const CatDeletedState({required super.details});
-
-  @override
-  CatDetailsState copyWith({CatDetail? details}) {
-    return CatDeletedState(
-      details: details ?? this.details,
-    );
-  }
+  const CatDeletedState({required super.data});
 }

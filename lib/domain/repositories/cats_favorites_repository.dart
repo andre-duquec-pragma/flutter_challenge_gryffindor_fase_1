@@ -1,9 +1,7 @@
 import '../models/cats.dart';
 
 abstract class CatsFavoritesRepository {
-  Future<Cat?> get({
-    required String id,
-  });
+  Future<Cat?> get({required String id});
 
   Future<List<Cat>> getAll();
 

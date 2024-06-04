@@ -16,6 +16,12 @@ final class CatModifyBloc extends Bloc<CatModifyState> {
   })  : _addFavoriteCatUseCase = addFavoriteCatUseCase,
         super(initialState: CatModifyInitialState(cat: cat));
 
+  /// To change state when a text field from form changes.
+  ///
+  /// [field] to identify the text field which suffered some change.
+  /// [newValue] the value to update in current form data.
+  ///
+  /// Emit a state change to [CatModifiedState].
   Future onModifyFormTextFieldChange(
     final CatModifyTextFormField field,
     final String newValue,
@@ -37,6 +43,12 @@ final class CatModifyBloc extends Bloc<CatModifyState> {
     emit(newState);
   }
 
+  /// To change state when a numeric field from form changes.
+  ///
+  /// [field] to identify the numeric field which suffered some change.
+  /// [newValue] the value to update in current form data.
+  ///
+  /// Emit a state change to [CatModifiedState].
   Future onCatModifyFormNumericFieldChange(
     final CatModifyNumericFormField field,
     final int newValue,
@@ -54,6 +66,11 @@ final class CatModifyBloc extends Bloc<CatModifyState> {
     emit(newState);
   }
 
+  /// To save current form data in storage.
+  ///
+  /// Uses current form data to invoke a use case which perform all the mapping and storage process.
+  /// When form data is invalid emit a state change to [CatModifyError].
+  /// Otherwise invoke the storage use case and if success emit a state change to [CarModifyFinished].
   Future save() async {
     try {
       final formData = state.formData;

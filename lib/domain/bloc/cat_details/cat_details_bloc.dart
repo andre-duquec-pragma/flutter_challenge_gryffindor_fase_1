@@ -18,6 +18,11 @@ class CatDetailsBloc extends Bloc<CatDetailsState> {
         _deleteFavoriteCatUseCase = deleteFavoriteCatUseCase,
         super(initialState: CatDetailsStarted(data: cat));
 
+  /// To delete current cat.
+  ///
+  /// [data] the data model which contains all required data to perform a delete.
+  ///
+  /// Removes cat from storage and emit a state change to [CatDeletedState].
   Future delete(Cat data) async {
     await _deleteFavoriteCatUseCase.invoke(id: data.id);
 
@@ -25,6 +30,10 @@ class CatDetailsBloc extends Bloc<CatDetailsState> {
     emit(newState);
   }
 
+  /// To reload current cat information
+  ///
+  /// Searches in storage to get the updated cat's data and emits a state change to [CatLoadedState].
+  /// When cat is not in storage anymore emit a state change to [CatDeletedState].
   Future reload() async {
     final cat = await _getFavoritesCatUseCase.invoke(id: state.data.id);
 

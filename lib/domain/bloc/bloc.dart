@@ -1,6 +1,7 @@
 import 'dart:async';
 
 class Bloc<T> {
+  /// The las emitted state.
   T state;
 
   final StreamController<T> _stream = StreamController.broadcast();
@@ -20,10 +21,12 @@ class Bloc<T> {
     emit(initialState);
   }
 
+  /// To emit a new state change.
   void emit(T newState) {
     _stream.sink.add(newState);
   }
 
+  /// To close state streams.
   void close() {
     _stream.close();
     _stateStreamController.close();

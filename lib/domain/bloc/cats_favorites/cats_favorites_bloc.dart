@@ -13,6 +13,10 @@ final class CatsFavoritesBloc extends Bloc<CatsFavoritesState> {
     loadCatsFavorites();
   }
 
+  /// To load all cats in storage.
+  ///
+  /// Searches in storage to get all cats data and emits a state change to [CatsFavoritesLoadedState].
+  /// When there's no cats in storage emit a state change to [CatsFavoritesLoadedState] with empty results.
   Future loadCatsFavorites() async {
     emit(const CatsFavoritesLoadingState());
 

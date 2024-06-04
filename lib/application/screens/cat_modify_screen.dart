@@ -3,7 +3,7 @@ import 'package:flutter_challenge_gryffindor_fase_1/application/components/butto
 
 import '../../domain/bloc/cat_modify/cat_modify_bloc.dart';
 import '../../domain/bloc/cat_modify/cat_modify_states.dart';
-import '../../domain/models/cats.dart';
+import '../../domain/entities/cats.dart';
 import '../../domain/utils/constants.dart';
 import '../../domain/utils/validators/form_empty_text_validator.dart';
 import '../components/containers/generic_scaffold.dart';

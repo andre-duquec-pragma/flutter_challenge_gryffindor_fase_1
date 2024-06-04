@@ -1,4 +1,4 @@
-import '../../domain/models/cats.dart';
+import '../../domain/entities/cats.dart';
 import '../../domain/repositories/cats_favorites_repository.dart';
 
 final class CatsFavoritesRepositoryImpl implements CatsFavoritesRepository {

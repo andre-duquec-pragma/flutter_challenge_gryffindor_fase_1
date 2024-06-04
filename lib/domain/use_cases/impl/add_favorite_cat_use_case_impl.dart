@@ -1,5 +1,5 @@
 import '../../../infrastructure/repository/cats_favorites_repository_impl.dart';
-import '../../models/cats.dart';
+import '../../entities/cats.dart';
 import '../../repositories/cats_favorites_repository.dart';
 import '../add_favorite_cat_use_case.dart';
 

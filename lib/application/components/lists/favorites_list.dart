@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../domain/models/cats.dart';
+import '../../../domain/entities/cats.dart';
 import '../../../domain/utils/constants.dart';
 import '../cards/favorite_card.dart';
 import '../texts/main_title.dart';

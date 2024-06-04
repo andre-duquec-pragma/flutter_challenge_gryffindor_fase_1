@@ -1,4 +1,4 @@
-import '../models/cats.dart';
+import '../entities/cats.dart';
 
 abstract class CatsFavoritesRepository {
   Future<Cat?> get({required String id});

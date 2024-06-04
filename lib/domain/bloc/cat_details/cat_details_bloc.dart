@@ -1,4 +1,4 @@
-import '../../models/cats.dart';
+import '../../entities/cats.dart';
 import '../../use_cases/delete_favorite_cat_use_case.dart';
 import '../../use_cases/get_favorite_cat_use_case.dart';
 import '../../use_cases/impl/delete_favorite_cat_use_case_impl.dart';

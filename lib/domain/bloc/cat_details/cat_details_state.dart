@@ -1,4 +1,4 @@
-import '../../models/cats.dart';
+import '../../entities/cats.dart';
 
 sealed class CatDetailsState {
   final Cat data;

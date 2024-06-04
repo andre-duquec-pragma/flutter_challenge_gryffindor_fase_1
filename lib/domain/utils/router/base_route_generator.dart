@@ -4,7 +4,7 @@ import '../../../application/screens/cat_details_screen.dart';
 import '../../../application/screens/cat_modify_screen.dart';
 import '../../../application/screens/cats_favorites_screen.dart';
 import '../../../application/screens/generic_error_screen.dart';
-import '../../models/cats.dart';
+import '../../entities/cats.dart';
 import '../routes.dart';
 import '../utils.dart';
 import 'route_generator.dart';

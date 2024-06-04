@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../domain/bloc/cats_favorites/cats_favorites_bloc.dart';
 import '../../domain/bloc/cats_favorites/cats_favorites_states.dart';
-import '../../domain/models/cats.dart';
+import '../../domain/entities/cats.dart';
 import '../../domain/utils/routes.dart';
 import '../components/containers/empty_results.dart';
 import '../components/lists/favorites_list.dart';

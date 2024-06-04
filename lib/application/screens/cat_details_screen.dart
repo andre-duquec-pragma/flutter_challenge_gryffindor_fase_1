@@ -3,7 +3,7 @@ import '../../domain/bloc/cat_details/cat_details_state.dart';
 
 import 'package:flutter/material.dart';
 
-import '../../domain/models/cats.dart';
+import '../../domain/entities/cats.dart';
 import '../../domain/utils/routes.dart';
 import '../../domain/utils/constants.dart';
 import '../components/images/cat_image.dart';
